@@ -1,5 +1,4 @@
 {
   "buildCommand": "bun run build",
-  "outputDirectory": "dist/client",
-  "framework": "vite"
+  "framework": null
 }

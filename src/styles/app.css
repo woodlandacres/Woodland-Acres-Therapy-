@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@theme {
+  --color-forest: #2D5A3D;
+  --color-forest-light: #5B8C5A;
+  --color-forest-dark: #1E3F2B;
+  --color-brown-warm: #8B6F47;
+  --color-cream: #F5F0E8;
+  --color-sage: #5B8C5A;
+  --color-sage-light: #A8C5A0;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+@layer base {
+  html,
+  body {
+    @apply bg-[#F5F0E8] text-gray-800 antialiased font-sans selection:bg-forest/10 selection:text-forest;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif text-gray-900;
+  }
+}

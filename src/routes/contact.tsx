@@ -1,5 +1,37 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { createServerFn } from "@tanstack/react-start";
+
+const sendInquiry = createServerFn({ method: "POST" })
+  .validator(
+    (data: {
+      name: string;
+      email: string;
+      phone: string;
+      state: string;
+      subject: string;
+      contactMethod: string;
+      message: string;
+    }) => data
+  )
+  .handler(async ({ data }) => {
+    const response = await fetch("https://api.ctomail.io/send", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        from: "woodland-acres-therapy-llc-af9ceb6d@ctomail.io",
+        to: "eweaver@woodlandacrestherapy.org",
+        subject: `New Inquiry: ${data.subject} from ${data.name}`,
+        body: `Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone}\nState: ${data.state}\nSubject: ${data.subject}\nContact Method: ${data.contactMethod}\n\nMessage:\n${data.message}`,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to send email");
+    }
+
+    return { success: true };
+  });
 
 export const Route = createFileRoute("/contact")({
   component: ContactPage,
@@ -18,15 +50,19 @@ function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    // Simulate an API call / createServerFn
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      await sendInquiry({ data: formData });
       setSubmitted(true);
-    }, 1200);
+    } catch (error) {
+      console.error("Error submitting contact form:", error);
+      alert("We encountered an issue submitting your inquiry. Please try again or call us at (414) 533-7910.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

@@ -1,70 +1,22 @@
-// Woodland Acres Therapy Contact Page - Secure inquiry submission handler
+// Woodland Acres Therapy Contact Page - FormSubmit.io integration
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
-import { createServerFn } from "@tanstack/react-start";
-
-const sendInquiry = createServerFn({ method: "POST" })
-  .validator(
-    (data: {
-      name: string;
-      email: string;
-      phone: string;
-      state: string;
-      subject: string;
-      contactMethod: string;
-      message: string;
-    }) => data
-  )
-  .handler(async ({ data }) => {
-    const response = await fetch("https://api.ctomail.io/send", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        from: "woodland-acres-therapy-llc-af9ceb6d@ctomail.io",
-        to: "eweaver@woodlandacrestherapy.org",
-        subject: `New Inquiry: ${data.subject} from ${data.name}`,
-        body: `Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone}\nState: ${data.state}\nSubject: ${data.subject}\nContact Method: ${data.contactMethod}\n\nMessage:\n${data.message}`,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to send email");
-    }
-
-    return { success: true };
-  });
+import { useState, useEffect } from "react";
 
 export const Route = createFileRoute("/contact")({
   component: ContactPage,
 });
 
 function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    state: "",
-    subject: "Free 15-Minute Consultation",
-    contactMethod: "Email",
-    message: "",
-  });
   const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      await sendInquiry({ data: formData });
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("submitted") === "true") {
       setSubmitted(true);
-    } catch (error) {
-      console.error("Error submitting contact form:", error);
-      alert("We encountered an issue submitting your inquiry. Please try again or call us at (414) 533-7910.");
-    } finally {
-      setLoading(false);
+      // Clean up the URL without reloading
+      window.history.replaceState({}, "", "/contact");
     }
-  };
+  }, []);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -82,7 +34,7 @@ function ContactPage() {
         </div>
       </section>
 
-      {/* Main Content (Map/Info left, Form right) */}
+      {/* Main Content (Info left, Form right) */}
       <section className="py-20 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 sm:gap-16 items-start">
@@ -155,25 +107,35 @@ function ContactPage() {
                     </svg>
                   </div>
                   <div className="space-y-3 max-w-md mx-auto">
-                    <h3 className="font-serif text-2xl font-bold text-gray-900">Thank you, {formData.name}!</h3>
+                    <h3 className="font-serif text-2xl font-bold text-gray-900">Thank You!</h3>
                     <p className="text-sm text-gray-600 leading-relaxed font-sans">
                       Your message has been sent successfully. Our licensed specialist will review your clinical goals and contact you 
-                      at <strong>{formData.email}</strong> within 24–48 business hours to schedule your free consultation.
+                      within 24–48 business hours to schedule your free consultation.
                     </p>
                   </div>
-                  <button
-                    onClick={() => setSubmitted(false)}
-                    className="text-xs font-bold text-forest uppercase tracking-wider hover:underline"
+                  <a
+                    href="/contact"
+                    className="text-xs font-bold text-forest uppercase tracking-wider hover:underline inline-block"
                   >
                     Send Another Message
-                  </button>
+                  </a>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form
+                  action="https://formsubmit.co/eweaver@woodlandacrestherapy.org"
+                  method="POST"
+                  className="space-y-6"
+                >
+                  {/* FormSubmit configuration */}
+                  <input type="hidden" name="_subject" value="New Website Inquiry from Woodland Acres Therapy" />
+                  <input type="hidden" name="_captcha" value="true" />
+                  <input type="hidden" name="_next" value="https://woodlandacrestherapy.com/contact?submitted=true" />
+                  <input type="hidden" name="_autoresponse" value="Thank you for reaching out to Woodland Acres Therapy. We have received your inquiry and a licensed specialist will respond within 24-48 business hours to schedule your free consultation." />
+                  <input type="hidden" name="_template" value="table" />
+
                   <h3 className="font-serif text-2xl font-bold text-gray-900 mb-2">Schedule Consultation / Send Inquiry</h3>
                   <p className="text-xs text-gray-500 font-sans leading-relaxed">
-                    Note: To receive clinical counseling, you must reside in **Wisconsin** or **Michigan** state. Self-paced course enrollment 
-                    is open globally.
+                    Note: To receive clinical counseling, you must reside in <strong>Wisconsin</strong> or <strong>Michigan</strong> state. Self-paced course enrollment is open globally.
                   </p>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -183,11 +145,10 @@ function ContactPage() {
                       <input
                         type="text"
                         id="name"
+                        name="name"
                         required
                         placeholder="Jane Doe"
                         className="w-full rounded-xl bg-white border border-forest/15 px-4 py-3 text-sm focus:outline-none focus:border-forest"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       />
                     </div>
 
@@ -197,11 +158,10 @@ function ContactPage() {
                       <input
                         type="email"
                         id="email"
+                        name="email"
                         required
                         placeholder="rowan@example.com"
                         className="w-full rounded-xl bg-white border border-forest/15 px-4 py-3 text-sm focus:outline-none focus:border-forest"
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       />
                     </div>
                   </div>
@@ -213,11 +173,10 @@ function ContactPage() {
                       <input
                         type="tel"
                         id="phone"
+                        name="phone"
                         required
                         placeholder="(414) 533-7910"
                         className="w-full rounded-xl bg-white border border-forest/15 px-4 py-3 text-sm focus:outline-none focus:border-forest"
-                        value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       />
                     </div>
 
@@ -226,10 +185,9 @@ function ContactPage() {
                       <label htmlFor="state" className="text-xs font-bold text-gray-600 uppercase font-sans">State of Residence</label>
                       <select
                         id="state"
+                        name="state"
                         required
                         className="w-full rounded-xl bg-white border border-forest/15 px-4 py-3 text-sm focus:outline-none focus:border-forest"
-                        value={formData.state}
-                        onChange={(e) => setFormData({ ...formData, state: e.target.value })}
                       >
                         <option value="">-- Select Your State --</option>
                         <option value="Wisconsin">Wisconsin</option>
@@ -245,9 +203,8 @@ function ContactPage() {
                       <label htmlFor="subject" className="text-xs font-bold text-gray-600 uppercase font-sans">Inquiry Subject</label>
                       <select
                         id="subject"
+                        name="subject"
                         className="w-full rounded-xl bg-white border border-forest/15 px-4 py-3 text-sm focus:outline-none focus:border-forest"
-                        value={formData.subject}
-                        onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                       >
                         <option value="Free 15-Minute Consultation">Free 15-Minute Consultation</option>
                         <option value="General Therapy Question">General Therapy Question</option>
@@ -261,9 +218,8 @@ function ContactPage() {
                       <label htmlFor="contactMethod" className="text-xs font-bold text-gray-600 uppercase font-sans">Preferred Contact Method</label>
                       <select
                         id="contactMethod"
+                        name="contact_method"
                         className="w-full rounded-xl bg-white border border-forest/15 px-4 py-3 text-sm focus:outline-none focus:border-forest"
-                        value={formData.contactMethod}
-                        onChange={(e) => setFormData({ ...formData, contactMethod: e.target.value })}
                       >
                         <option value="Email">Email Me</option>
                         <option value="Phone">Call Me</option>
@@ -277,22 +233,20 @@ function ContactPage() {
                     <label htmlFor="message" className="text-xs font-bold text-gray-600 uppercase font-sans">Briefly describe your goals / symptoms</label>
                     <textarea
                       id="message"
+                      name="message"
                       required
                       rows={5}
                       placeholder="Hi, I am looking to schedule a consultation for ERP for OCD..."
                       className="w-full rounded-xl bg-white border border-forest/15 px-4 py-3 text-sm focus:outline-none focus:border-forest"
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     />
                   </div>
 
                   {/* Submit Button */}
                   <button
                     type="submit"
-                    disabled={loading}
-                    className="w-full rounded-xl bg-forest py-4 font-semibold text-white hover:bg-forest-dark transition-colors shadow-md disabled:bg-forest/50"
+                    className="w-full rounded-xl bg-forest py-4 font-semibold text-white hover:bg-forest-dark transition-colors shadow-md"
                   >
-                    {loading ? "Sending HIPAA-Secure Message..." : "Submit My Consultation Inquiry"}
+                    Submit My Consultation Inquiry
                   </button>
                 </form>
               )}

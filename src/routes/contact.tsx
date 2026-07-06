@@ -122,7 +122,7 @@ function ContactPage() {
                 </div>
               ) : (
                 <form
-                  action="https://formsubmit.co/eweaver@woodlandacrestherapy.org"
+                  action="https://formsubmit.co/weaveraemily@gmail.com"
                   method="POST"
                   className="space-y-6"
                 >

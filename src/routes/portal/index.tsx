@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { loginUser } from "../../portalServer";
+import { portalApi } from "../../portalServer";
 
 export const Route = createFileRoute("/portal/")({
   component: PortalLogin,
@@ -100,7 +100,7 @@ function PortalLogin() {
                 id="email"
                 type="email"
                 required
-                placeholder="client@woodlandacrestherapy.org"
+                placeholder="client@example.com"
                 className="w-full rounded-xl border border-forest/15 bg-white px-4 py-3 text-sm focus:outline-none focus:border-forest"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -140,7 +140,7 @@ function PortalLogin() {
             <p className="text-xs font-bold text-forest">🔑 Demo Credential Assist:</p>
             <div className="grid grid-cols-1 gap-2 text-[11px] text-gray-600 font-medium">
               <div className="flex justify-between items-center border-b border-forest/5 pb-1">
-                <span>Therapist: <code className="bg-white px-1 py-0.5 rounded text-forest">eweaver@woodlandacrestherapy.org</code></span>
+                <span>Therapist: <code className="bg-white px-1 py-0.5 rounded text-forest">weaveraemily@gmail.com</code></span>
                 <span className="font-semibold text-forest">therapist123</span>
               </div>
               <div className="flex justify-between items-center">

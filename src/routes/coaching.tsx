@@ -48,7 +48,7 @@ function Coaching() {
             </div>
             <div className="text-center pt-4">
               <a
-                href="mailto:eweaver@woodlandacrestherapy.org?subject=Coaching%20Waitlist%20Interest&body=I%27m%20interested%20in%20learning%20more%20about%20your%20coaching%20program.%20Please%20keep%20me%20updated!"
+                href="mailto:weaveraemily@gmail.com?subject=Coaching%20Waitlist%20Interest&body=I%27m%20interested%20in%20learning%20more%20about%20your%20coaching%20program.%20Please%20keep%20me%20updated!"
                 className="rounded-xl bg-forest px-6 py-3.5 text-base font-semibold text-white shadow-md hover:bg-forest-dark transition-all"
               >
                 Join the Waitlist

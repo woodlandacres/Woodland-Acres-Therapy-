@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { usePortalSession, PortalLayout } from "../auth-helper";
-import { getTherapistDashboardData, getDiscussions, addDiscussionReply } from "../../../portalServer";
+import { portalApi } from "../../../portalServer";
 
 export const Route = createFileRoute("/portal/therapist/discussions")({
   component: TherapistDiscussions,
@@ -22,7 +22,7 @@ function TherapistDiscussions() {
   useEffect(() => {
     if (!token || !user) return;
 
-    getTherapistDashboardData({ data: { token } })
+    portalApi({ data: { action: "getTherapistDashboard", payload: { token } } })
       .then((res) => {
         setCourses(res.courses || []);
         if (res.courses && res.courses.length > 0) {

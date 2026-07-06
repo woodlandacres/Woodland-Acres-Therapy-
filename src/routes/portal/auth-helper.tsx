@@ -1,12 +1,21 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "@tanstack/react-router";
-import { verifySession } from "../../portalServer";
 
 export interface User {
   id: number;
   email: string;
   display_name: string;
   role: "therapist" | "patient";
+}
+
+// Simple base64 JSON decoder for JWT payload (client-side, no deps needed)
+function decodeJwt(token: string): any {
+  try {
+    const payload = token.split(".")[1];
+    return JSON.parse(atob(payload));
+  } catch {
+    return null;
+  }
 }
 
 export function usePortalSession(requiredRole?: "therapist" | "patient") {
@@ -25,23 +34,25 @@ export function usePortalSession(requiredRole?: "therapist" | "patient") {
       return;
     }
 
-    verifySession({ data: { token: storedToken } })
-      .then((res: any) => {
-        const u = res.user as User;
-        if (requiredRole && u.role !== requiredRole) {
-          navigate({ to: "/portal/dashboard" });
-        } else {
-          setUser(u);
-        }
-      })
-      .catch((err) => {
-        console.error("Auth verification failed:", err);
-        localStorage.removeItem("portal_token");
-        navigate({ to: "/portal" });
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    // Decode JWT payload client-side (server validates on each API call)
+    const decoded = decodeJwt(storedToken);
+    if (decoded && decoded.email && decoded.role) {
+      const u: User = {
+        id: decoded.userId,
+        email: decoded.email,
+        display_name: decoded.email.split("@")[0],
+        role: decoded.role as "therapist" | "patient",
+      };
+      if (requiredRole && u.role !== requiredRole) {
+        navigate({ to: "/portal/dashboard" });
+      } else {
+        setUser(u);
+      }
+    } else {
+      localStorage.removeItem("portal_token");
+      navigate({ to: "/portal" });
+    }
+    setLoading(false);
   }, [navigate]);
 
   const handleLogout = () => {
@@ -102,81 +113,18 @@ export function PortalLayout({ user, loading, activeTab, children, handleLogout 
               <nav className="hidden md:flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider">
                 {isTherapist ? (
                   <>
-                    <Link
-                      to="/portal/dashboard"
-                      className={`px-3 py-2 rounded-xl transition-all ${
-                        activeTab === "dashboard" ? "bg-forest/10 text-forest" : "text-gray-600 hover:bg-gray-100"
-                      }`}
-                    >
-                      Dashboard
-                    </Link>
-                    <Link
-                      to="/portal/therapist/students"
-                      className={`px-3 py-2 rounded-xl transition-all ${
-                        activeTab === "students" ? "bg-forest/10 text-forest" : "text-gray-600 hover:bg-gray-100"
-                      }`}
-                    >
-                      Student Roster
-                    </Link>
-                    <Link
-                      to="/portal/therapist/content"
-                      className={`px-3 py-2 rounded-xl transition-all ${
-                        activeTab === "content" ? "bg-forest/10 text-forest" : "text-gray-600 hover:bg-gray-100"
-                      }`}
-                    >
-                      Content Management
-                    </Link>
-                    <Link
-                      to="/portal/therapist/discussions"
-                      className={`px-3 py-2 rounded-xl transition-all ${
-                        activeTab === "discussions" ? "bg-forest/10 text-forest" : "text-gray-600 hover:bg-gray-100"
-                      }`}
-                    >
-                      Discussions Forum
-                    </Link>
+                    <Link to="/portal/dashboard" className={`px-3 py-2 rounded-xl transition-all ${activeTab === "dashboard" ? "bg-forest/10 text-forest" : "text-gray-600 hover:bg-gray-100"}`}>Dashboard</Link>
+                    <Link to="/portal/therapist/students" className={`px-3 py-2 rounded-xl transition-all ${activeTab === "students" ? "bg-forest/10 text-forest" : "text-gray-600 hover:bg-gray-100"}`}>Student Roster</Link>
+                    <Link to="/portal/therapist/content" className={`px-3 py-2 rounded-xl transition-all ${activeTab === "content" ? "bg-forest/10 text-forest" : "text-gray-600 hover:bg-gray-100"}`}>Content Management</Link>
+                    <Link to="/portal/therapist/discussions" className={`px-3 py-2 rounded-xl transition-all ${activeTab === "discussions" ? "bg-forest/10 text-forest" : "text-gray-600 hover:bg-gray-100"}`}>Discussions Forum</Link>
                   </>
                 ) : (
                   <>
-                    <Link
-                      to="/portal/dashboard"
-                      className={`px-3 py-2 rounded-xl transition-all ${
-                        activeTab === "dashboard" ? "bg-forest/10 text-forest" : "text-gray-600 hover:bg-gray-100"
-                      }`}
-                    >
-                      Dashboard
-                    </Link>
-                    <Link
-                      to="/portal/student/courses"
-                      className={`px-3 py-2 rounded-xl transition-all ${
-                        activeTab === "courses" ? "bg-forest/10 text-forest" : "text-gray-600 hover:bg-gray-100"
-                      }`}
-                    >
-                      My Courses
-                    </Link>
-                    <Link
-                      to="/portal/student/resources"
-                      className={`px-3 py-2 rounded-xl transition-all ${
-                        activeTab === "resources" ? "bg-forest/10 text-forest" : "text-gray-600 hover:bg-gray-100"
-                      }`}
-                    >
-                      Resources & Logs
-                    </Link>
-                    <Link
-                      to="/portal/student/classroom"
-                      className={`px-3 py-2 rounded-xl transition-all ${
-                        activeTab === "classroom" ? "bg-forest/10 text-forest" : "text-gray-600 hover:bg-gray-100"
-                      }`}
-                    >
-                      Live Classroom
-                    </Link>
-                    <Link
-                      to="/portal/student/community"
-                      className={`px-3 py-2 rounded-xl transition-all ${
-                        activeTab === "community" ? "bg-forest/10 text-forest" : "text-gray-600 hover:bg-gray-100"
-                      }`}
-                    >
-                      Community Board
-                    </Link>
+                    <Link to="/portal/dashboard" className={`px-3 py-2 rounded-xl transition-all ${activeTab === "dashboard" ? "bg-forest/10 text-forest" : "text-gray-600 hover:bg-gray-100"}`}>Dashboard</Link>
+                    <Link to="/portal/student/courses" className={`px-3 py-2 rounded-xl transition-all ${activeTab === "courses" ? "bg-forest/10 text-forest" : "text-gray-600 hover:bg-gray-100"}`}>My Courses</Link>
+                    <Link to="/portal/student/resources" className={`px-3 py-2 rounded-xl transition-all ${activeTab === "resources" ? "bg-forest/10 text-forest" : "text-gray-600 hover:bg-gray-100"}`}>Resources & Logs</Link>
+                    <Link to="/portal/student/classroom" className={`px-3 py-2 rounded-xl transition-all ${activeTab === "classroom" ? "bg-forest/10 text-forest" : "text-gray-600 hover:bg-gray-100"}`}>Live Classroom</Link>
+                    <Link to="/portal/student/community" className={`px-3 py-2 rounded-xl transition-all ${activeTab === "community" ? "bg-forest/10 text-forest" : "text-gray-600 hover:bg-gray-100"}`}>Community Board</Link>
                   </>
                 )}
               </nav>
@@ -185,16 +133,9 @@ export function PortalLayout({ user, loading, activeTab, children, handleLogout 
             <div className="flex items-center gap-4">
               <div className="flex flex-col text-right hidden sm:block">
                 <span className="text-xs font-bold text-gray-900 leading-tight block">{user.display_name}</span>
-                <span className="text-[10px] text-gray-500 font-medium tracking-wide uppercase font-sans">
-                  Role: {user.role === "therapist" ? "Clinical Specialist" : "Active Patient"}
-                </span>
+                <span className="text-[10px] text-gray-500 font-medium tracking-wide uppercase font-sans">Role: {user.role === "therapist" ? "Clinical Specialist" : "Active Patient"}</span>
               </div>
-              <button
-                onClick={handleLogout}
-                className="rounded-xl border border-gray-200 px-4 py-2 text-xs font-bold text-gray-700 bg-white hover:bg-gray-50 transition-all shadow-sm"
-              >
-                Sign Out
-              </button>
+              <button onClick={handleLogout} className="rounded-xl border border-gray-200 px-4 py-2 text-xs font-bold text-gray-700 bg-white hover:bg-gray-50 transition-all shadow-sm">Sign Out</button>
             </div>
           </div>
         </div>
@@ -204,89 +145,24 @@ export function PortalLayout({ user, loading, activeTab, children, handleLogout 
       <div className="bg-white border-b border-forest/10 md:hidden flex flex-wrap gap-2 px-4 py-3 justify-center text-[10px] font-bold uppercase tracking-wider">
         {isTherapist ? (
           <>
-            <Link
-              to="/portal/dashboard"
-              className={`px-2.5 py-1.5 rounded-lg ${
-                activeTab === "dashboard" ? "bg-forest/10 text-forest" : "text-gray-600"
-              }`}
-            >
-              Dashboard
-            </Link>
-            <Link
-              to="/portal/therapist/students"
-              className={`px-2.5 py-1.5 rounded-lg ${
-                activeTab === "students" ? "bg-forest/10 text-forest" : "text-gray-600"
-              }`}
-            >
-              Roster
-            </Link>
-            <Link
-              to="/portal/therapist/content"
-              className={`px-2.5 py-1.5 rounded-lg ${
-                activeTab === "content" ? "bg-forest/10 text-forest" : "text-gray-600"
-              }`}
-            >
-              Content
-            </Link>
-            <Link
-              to="/portal/therapist/discussions"
-              className={`px-2.5 py-1.5 rounded-lg ${
-                activeTab === "discussions" ? "bg-forest/10 text-forest" : "text-gray-600"
-              }`}
-            >
-              Discussions
-            </Link>
+            <Link to="/portal/dashboard" className={`px-2.5 py-1.5 rounded-lg ${activeTab === "dashboard" ? "bg-forest/10 text-forest" : "text-gray-600"}`}>Dashboard</Link>
+            <Link to="/portal/therapist/students" className={`px-2.5 py-1.5 rounded-lg ${activeTab === "students" ? "bg-forest/10 text-forest" : "text-gray-600"}`}>Roster</Link>
+            <Link to="/portal/therapist/content" className={`px-2.5 py-1.5 rounded-lg ${activeTab === "content" ? "bg-forest/10 text-forest" : "text-gray-600"}`}>Content</Link>
+            <Link to="/portal/therapist/discussions" className={`px-2.5 py-1.5 rounded-lg ${activeTab === "discussions" ? "bg-forest/10 text-forest" : "text-gray-600"}`}>Discussions</Link>
           </>
         ) : (
           <>
-            <Link
-              to="/portal/dashboard"
-              className={`px-2.5 py-1.5 rounded-lg ${
-                activeTab === "dashboard" ? "bg-forest/10 text-forest" : "text-gray-600"
-              }`}
-            >
-              Dashboard
-            </Link>
-            <Link
-              to="/portal/student/courses"
-              className={`px-2.5 py-1.5 rounded-lg ${
-                activeTab === "courses" ? "bg-forest/10 text-forest" : "text-gray-600"
-              }`}
-            >
-              Courses
-            </Link>
-            <Link
-              to="/portal/student/resources"
-              className={`px-2.5 py-1.5 rounded-lg ${
-                activeTab === "resources" ? "bg-forest/10 text-forest" : "text-gray-600"
-              }`}
-            >
-              Logs
-            </Link>
-            <Link
-              to="/portal/student/classroom"
-              className={`px-2.5 py-1.5 rounded-lg ${
-                activeTab === "classroom" ? "bg-forest/10 text-forest" : "text-gray-600"
-              }`}
-            >
-              Live
-            </Link>
-            <Link
-              to="/portal/student/community"
-              className={`px-2.5 py-1.5 rounded-lg ${
-                activeTab === "community" ? "bg-forest/10 text-forest" : "text-gray-600"
-              }`}
-            >
-              Community
-            </Link>
+            <Link to="/portal/dashboard" className={`px-2.5 py-1.5 rounded-lg ${activeTab === "dashboard" ? "bg-forest/10 text-forest" : "text-gray-600"}`}>Dashboard</Link>
+            <Link to="/portal/student/courses" className={`px-2.5 py-1.5 rounded-lg ${activeTab === "courses" ? "bg-forest/10 text-forest" : "text-gray-600"}`}>Courses</Link>
+            <Link to="/portal/student/resources" className={`px-2.5 py-1.5 rounded-lg ${activeTab === "resources" ? "bg-forest/10 text-forest" : "text-gray-600"}`}>Logs</Link>
+            <Link to="/portal/student/classroom" className={`px-2.5 py-1.5 rounded-lg ${activeTab === "classroom" ? "bg-forest/10 text-forest" : "text-gray-600"}`}>Live</Link>
+            <Link to="/portal/student/community" className={`px-2.5 py-1.5 rounded-lg ${activeTab === "community" ? "bg-forest/10 text-forest" : "text-gray-600"}`}>Community</Link>
           </>
         )}
       </div>
 
       {/* Content Area */}
-      <main className="flex-grow py-8 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
-        {children}
-      </main>
+      <main className="flex-grow py-8 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">{children}</main>
     </div>
   );
 }

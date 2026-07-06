@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { usePortalSession, PortalLayout } from "../auth-helper";
-import { getPatientDashboardData } from "../../../portalServer";
+import { portalApi } from "../../../portalServer";
 
 export const Route = createFileRoute("/portal/student/classroom")({
   component: StudentClassroom,
@@ -15,7 +15,7 @@ function StudentClassroom() {
   useEffect(() => {
     if (!token || !user) return;
 
-    getPatientDashboardData({ data: { token } })
+    portalApi({ data: { action: "getPatientDashboard", payload: { token } } })
       .then((res) => {
         setSessions(res.zoomSessions || []);
       })

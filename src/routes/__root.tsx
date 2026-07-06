@@ -84,7 +84,7 @@ function RootDocument({ children }: { children: ReactNode }) {
               "@id": "https://www.woodlandacrestherapy.com/#organization",
               "url": "https://www.woodlandacrestherapy.com",
               "telephone": "(414) 533-7910",
-              "email": "eweaver@woodlandacrestherapy.org",
+              "email": "weaveraemily@gmail.com",
               "priceRange": "$",
               "openingHoursSpecification": {
                 "@type": "OpeningHoursSpecification",
@@ -510,8 +510,8 @@ function Layout({ children }: { children: ReactNode }) {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="font-semibold text-sage-light">Email:</span>
-                  <a href="mailto:eweaver@woodlandacrestherapy.org" className="hover:underline hover:text-white">
-                    eweaver@woodlandacrestherapy.org
+                  <a href="mailto:weaveraemily@gmail.com" className="hover:underline hover:text-white">
+                    weaveraemily@gmail.com
                   </a>
                 </li>
                 <li className="flex items-start gap-2">

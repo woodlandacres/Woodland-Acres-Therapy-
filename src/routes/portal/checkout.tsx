@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { usePortalSession, PortalLayout } from "./auth-helper";
-import { getAllCourses, checkoutCourse } from "../../portalServer";
+import { portalApi } from "../../portalServer";
 
 export const Route = createFileRoute("/portal/checkout")({
   component: PortalCheckout,

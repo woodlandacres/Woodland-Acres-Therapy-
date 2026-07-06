@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { registerUser } from "../../portalServer";
+import { portalApi } from "../../portalServer";
 
 export const Route = createFileRoute("/portal/register")({
   component: PortalRegister,

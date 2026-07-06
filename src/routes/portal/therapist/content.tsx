@@ -1,15 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { usePortalSession, PortalLayout } from "../auth-helper";
-import { 
-  getTherapistDashboardData, 
-  getCourseViewerData,
-  addCourseModule, 
-  deleteCourseModule, 
-  addCourseResource, 
-  deleteCourseResource,
-  deleteCourse 
-} from "../../../portalServer";
+import { portalApi } from "../../../portalServer";
 
 export const Route = createFileRoute("/portal/therapist/content")({
   component: TherapistContent,
@@ -46,16 +38,18 @@ function TherapistContent() {
     fetchCourseDetails();
   }, [token, selectedCourseId]);
 
+  const api = (action: string, payload: any) => portalApi({ data: { action, payload } });
+
   const fetchDashboard = () => {
     if (!token) return;
-    getTherapistDashboardData({ data: { token } })
-      .then((res) => {
+    api("getTherapistDashboard", { token })
+      .then((res: any) => {
         setDashboardData(res);
         if (res.courses && res.courses.length > 0 && selectedCourseId === null) {
           setSelectedCourseId(res.courses[0].id);
         }
       })
-      .catch((err) => {
+      .catch((err: any) => {
         console.error(err);
         setError("Failed to fetch curriculum details.");
       });
@@ -63,11 +57,11 @@ function TherapistContent() {
 
   const fetchCourseDetails = () => {
     if (!token || selectedCourseId === null) return;
-    getCourseViewerData({ data: { token, courseId: selectedCourseId } })
-      .then((res) => {
+    api("getCourseDetail", { token, courseId: selectedCourseId })
+      .then((res: any) => {
         setCourseData(res);
       })
-      .catch((err) => {
+      .catch((err: any) => {
         console.error(err);
         setError("Failed to load details for selected course.");
       });
@@ -81,14 +75,13 @@ function TherapistContent() {
     setSuccess("");
 
     try {
-      await addCourseModule({
-        data: {
-          token,
-          courseId: selectedCourseId,
-          title: moduleTitle,
-          contentType: moduleType,
-          contentUrl: moduleUrl,
-        },
+      await api("addModule", {
+        token,
+        courseId: selectedCourseId,
+        title: moduleTitle,
+        contentType: moduleType,
+        contentUrl: moduleUrl,
+        orderIndex: 0,
       });
       setSuccess(`Module "${moduleTitle}" added successfully.`);
       setModuleTitle("");
@@ -108,9 +101,7 @@ function TherapistContent() {
     setSuccess("");
 
     try {
-      await deleteCourseModule({
-        data: { token, moduleId },
-      });
+      await api("deleteModule", { token, moduleId });
       setSuccess("Module deleted successfully.");
       fetchCourseDetails();
     } catch (err: any) {
@@ -126,15 +117,13 @@ function TherapistContent() {
     setSuccess("");
 
     try {
-      await addCourseResource({
-        data: {
-          token,
-          courseId: selectedCourseId,
-          title: resourceTitle,
-          fileType: resourceType,
-          fileUrl: resourceUrl,
-          description: resourceDesc,
-        },
+      await api("addResource", {
+        token,
+        courseId: selectedCourseId,
+        title: resourceTitle,
+        fileType: resourceType,
+        fileUrl: resourceUrl,
+        description: resourceDesc,
       });
       setSuccess(`Resource "${resourceTitle}" uploaded successfully.`);
       setResourceTitle("");
@@ -155,9 +144,7 @@ function TherapistContent() {
     setSuccess("");
 
     try {
-      await deleteCourseResource({
-        data: { token, resourceId },
-      });
+      await api("deleteResource", { token, resourceId });
       setSuccess("Worksheet deleted successfully.");
       fetchCourseDetails();
     } catch (err: any) {
@@ -172,9 +159,7 @@ function TherapistContent() {
     setSuccess("");
 
     try {
-      await deleteCourse({
-        data: { token, courseId },
-      });
+      await api("deleteCourse", { token, courseId });
       setSuccess("Course deleted successfully.");
       setSelectedCourseId(null);
       setCourseData(null);
@@ -240,7 +225,6 @@ function TherapistContent() {
 
         {selectedCourseId !== null && courseDetails && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
             {/* Left Col: Existing Content Lists */}
             <div className="lg:col-span-8 space-y-8">
               {/* Modules list */}
@@ -389,7 +373,6 @@ function TherapistContent() {
                 </form>
               </div>
             </div>
-
           </div>
         )}
       </div>

@@ -1,5 +1,3 @@
-import bcryptjs from "bcryptjs";
-
 let dbInstance: any = null;
 
 export async function getDb() {
@@ -119,7 +117,7 @@ async function initDb(db: any) {
   const now = new Date().toISOString();
 
   // Check if therapist exists
-  const therapistEmail = "eweaver@woodlandacrestherapy.org";
+  const therapistEmail = "weaveraemily@gmail.com";
   const therapist = db.query("SELECT * FROM users WHERE email = ?").get(therapistEmail);
   let therapistId = therapist?.id;
 

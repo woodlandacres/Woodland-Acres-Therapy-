@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { usePortalSession, PortalLayout } from "./auth-helper";
-import { getPatientDashboardData, getTherapistDashboardData, createCourse } from "../../portalServer";
+import { portalApi } from "../../portalServer";
 
 export const Route = createFileRoute("/portal/dashboard")({
   component: PortalDashboardRoute,
@@ -24,7 +24,7 @@ function PortalDashboardRoute() {
     if (!token || !user) return;
 
     if (user.role === "patient") {
-      getPatientDashboardData({ data: { token } })
+      portalApi({ data: { action: "getPatientDashboard", payload: { token } } })
         .then((res) => {
           setPatientData(res);
         })
@@ -39,7 +39,7 @@ function PortalDashboardRoute() {
 
   const fetchTherapistData = () => {
     if (!token) return;
-    getTherapistDashboardData({ data: { token } })
+    portalApi({ data: { action: "getTherapistDashboard", payload: { token } } })
       .then((res) => {
         setTherapistData(res);
       })

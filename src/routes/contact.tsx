@@ -22,6 +22,87 @@ function ContactPage() {
         </div>
       </section>
 
+      {/* Contact Form */}
+      <section className="py-16 bg-white border-b border-forest/10">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-serif font-bold text-gray-900">Send Us a Message</h2>
+            <p className="mt-3 text-gray-600">Fill out the form below and we'll get back to you within 24-48 business hours.</p>
+          </div>
+          <form
+            action="https://formsubmit.io/send/eweaver@woodlandacrestherapy.org"
+            method="POST"
+            className="space-y-6 max-w-xl mx-auto"
+          >
+            <input type="hidden" name="_redirect" value="https://woodlandacrestherapy.ctonew.app/contact/thank-you" />
+            <input type="hidden" name="_captcha" value="true" />
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-1.5">Full Name <span className="text-red-500">*</span></label>
+                <input type="text" id="name" name="name" required
+                  className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-forest focus:border-forest bg-cream/30" />
+              </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-1.5">Email Address <span className="text-red-500">*</span></label>
+                <input type="email" id="email" name="email" required
+                  className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-forest focus:border-forest bg-cream/30" />
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-1.5">Phone Number</label>
+              <input type="tel" id="phone" name="phone"
+                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-forest focus:border-forest bg-cream/30" />
+            </div>
+
+            <div>
+              <label htmlFor="interest" className="block text-sm font-semibold text-gray-700 mb-1.5">I'm interested in <span className="text-red-500">*</span></label>
+              <select id="interest" name="interest" required
+                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-forest focus:border-forest bg-cream/30">
+                <option value="">Select a service...</option>
+                <option value="individual-therapy">Individual Therapy</option>
+                <option value="ocd-erp">OCD / ERP Therapy</option>
+                <option value="neurodivergent">Neurodivergent-Affirming Care</option>
+                <option value="chronic-illness">Chronic Illness Support</option>
+                <option value="couples">Couples / Relationship Therapy</option>
+                <option value="ocd-course">OCD Recovery Course</option>
+                <option value="nd-relationships-course">Neurodivergent Relationships Course</option>
+                <option value="support-group">Support Groups</option>
+                <option value="not-sure">Not Sure / General Inquiry</option>
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="insurance" className="block text-sm font-semibold text-gray-700 mb-1.5">Insurance / Pay Method</label>
+              <select id="insurance" name="insurance"
+                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-forest focus:border-forest bg-cream/30">
+                <option value="">Select...</option>
+                <option value="aetna">Aetna</option>
+                <option value="bcbs">Blue Cross Blue Shield</option>
+                <option value="cigna">Cigna</option>
+                <option value="self-pay">Self-Pay</option>
+                <option value="other">Other / Not Sure</option>
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-1.5">Your Message <span className="text-red-500">*</span></label>
+              <textarea id="message" name="message" rows={5} required
+                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-forest focus:border-forest bg-cream/30"></textarea>
+            </div>
+
+            <div className="text-center">
+              <button type="submit"
+                className="rounded-xl bg-forest px-8 py-4 text-base font-semibold text-white shadow-md hover:bg-forest-dark transition-all transform hover:-translate-y-0.5 w-full sm:w-auto">
+                Send Message
+              </button>
+              <p className="text-xs text-gray-500 mt-4">Your information is kept confidential and will not be shared.</p>
+            </div>
+          </form>
+        </div>
+      </section>
+
       {/* Contact Cards */}
       <section className="py-20 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -39,10 +120,10 @@ function ContactPage() {
                 The best way to reach us. We'll respond within 24-48 business hours.
               </p>
               <a
-                href="mailto:weaveraemily@gmail.com"
+                href="mailto:eweaver@woodlandacrestherapy.org"
                 className="text-xl font-semibold text-forest hover:text-forest-dark underline underline-offset-4 decoration-2 decoration-forest/30 hover:decoration-forest transition-all"
               >
-                weaveraemily@gmail.com
+                eweaver@woodlandacrestherapy.org
               </a>
             </div>
 

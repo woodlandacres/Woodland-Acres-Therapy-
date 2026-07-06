@@ -1,5 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { loginUser } from "../../portalServer";
 
 export const Route = createFileRoute("/portal/")({
   component: PortalLogin,
@@ -12,26 +13,43 @@ function PortalLogin() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
+  // Redirect if already logged in
+  useEffect(() => {
+    const token = localStorage.getItem("portal_token");
+    if (token) {
+      navigate({ to: "/portal/dashboard" });
+    }
+  }, [navigate]);
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
-    // Simulate database/API check
-    setTimeout(() => {
-      setLoading(false);
-      // Stub authentication: allow eweaver@woodlandacrestherapy.org or test accounts
-      if (email.trim() && password.length >= 4) {
-        // Successful login mock
+    try {
+      const res = await loginUser({
+        data: {
+          email: email.trim(),
+          password: password,
+        },
+      });
+
+      if (res && res.success) {
+        localStorage.setItem("portal_token", res.token);
         navigate({ to: "/portal/dashboard" });
       } else {
-        setError("Invalid email or password. (Hint: Enter any valid email and a 4+ character password for this stubbed portal).");
+        setError("Invalid email or password.");
       }
-    }, 1000);
+    } catch (err: any) {
+      console.error(err);
+      setError(err?.message || "Invalid email or password. Please verify your credentials.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="flex min-h-[80vh] flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="flex min-h-[85vh] flex-col justify-center py-12 sm:px-6 lg:px-8 bg-[#F5F0E8]/20 font-sans">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         {/* Logo */}
         <div className="flex justify-center">
@@ -59,7 +77,7 @@ function PortalLogin() {
         <h2 className="mt-6 text-center text-3xl font-serif font-bold tracking-tight text-gray-900">
           Sign In to Your Client Sanctuary
         </h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
+        <p className="mt-2 text-center text-sm text-gray-650">
           Access your courses, check support group Zoom links, and submit worksheets.
         </p>
       </div>
@@ -75,7 +93,7 @@ function PortalLogin() {
 
             {/* Email */}
             <div className="space-y-1.5">
-              <label htmlFor="email" className="block text-xs font-bold text-gray-700 uppercase font-sans">
+              <label htmlFor="email" className="block text-xs font-bold text-gray-700 uppercase">
                 Secure Email Address
               </label>
               <input
@@ -92,12 +110,9 @@ function PortalLogin() {
             {/* Password */}
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-xs font-bold text-gray-700 uppercase font-sans">
+                <label htmlFor="password" className="block text-xs font-bold text-gray-700 uppercase">
                   Password
                 </label>
-                <a href="#forgot" className="text-xs font-semibold text-forest hover:underline">
-                  Forgot Password?
-                </a>
               </div>
               <input
                 id="password"
@@ -110,21 +125,6 @@ function PortalLogin() {
               />
             </div>
 
-            {/* Remember Me */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 rounded border-gray-300 text-forest focus:ring-forest"
-                />
-                <label htmlFor="remember-me" className="ml-2 block text-xs text-gray-650 font-semibold font-sans">
-                  Remember me on this browser
-                </label>
-              </div>
-            </div>
-
             {/* Submit */}
             <button
               type="submit"
@@ -135,15 +135,27 @@ function PortalLogin() {
             </button>
           </form>
 
+          {/* Quick Login Assist (HIPAA-Secure Test Accounts) */}
+          <div className="mt-6 bg-[#ECE5D8]/40 border border-forest/15 rounded-2xl p-4 space-y-2">
+            <p className="text-xs font-bold text-forest">🔑 Demo Credential Assist:</p>
+            <div className="grid grid-cols-1 gap-2 text-[11px] text-gray-600 font-medium">
+              <div className="flex justify-between items-center border-b border-forest/5 pb-1">
+                <span>Therapist: <code className="bg-white px-1 py-0.5 rounded text-forest">eweaver@woodlandacrestherapy.org</code></span>
+                <span className="font-semibold text-forest">therapist123</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span>Patient: <code className="bg-white px-1 py-0.5 rounded text-forest">patient@test.com</code></span>
+                <span className="font-semibold text-forest">patient123</span>
+              </div>
+            </div>
+          </div>
+
           <div className="mt-6 border-t border-gray-150 pt-4 text-center text-xs text-gray-500 font-sans space-y-2">
             <p>
-              Are you a new client? Your invite link was emailed to you upon clinical intake.
-            </p>
-            <p>
-              Need portal support? Reach out to{" "}
-              <a href="mailto:eweaver@woodlandacrestherapy.org" className="text-forest hover:underline font-semibold">
-                eweaver@woodlandacrestherapy.org
-              </a>
+              Are you a new client? Your invite link was emailed to you upon clinical intake, or you can{" "}
+              <Link to="/portal/register" className="text-forest hover:underline font-bold">
+                Register here
+              </Link>
             </p>
           </div>
         </div>

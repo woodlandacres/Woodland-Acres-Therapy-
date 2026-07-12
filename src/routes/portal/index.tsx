@@ -135,20 +135,8 @@ function PortalLogin() {
             </button>
           </form>
 
-          {/* Quick Login Assist (HIPAA-Secure Test Accounts) */}
-          <div className="mt-6 bg-[#ECE5D8]/40 border border-forest/15 rounded-2xl p-4 space-y-2">
-            <p className="text-xs font-bold text-forest">🔑 Demo Credential Assist:</p>
-            <div className="grid grid-cols-1 gap-2 text-[11px] text-gray-600 font-medium">
-              <div className="flex justify-between items-center border-b border-forest/5 pb-1">
-                <span>Therapist: <code className="bg-white px-1 py-0.5 rounded text-forest">weaveraemily@gmail.com</code></span>
-                <span className="font-semibold text-forest">therapist123</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span>Patient: <code className="bg-white px-1 py-0.5 rounded text-forest">patient@test.com</code></span>
-                <span className="font-semibold text-forest">patient123</span>
-              </div>
-            </div>
-          </div>
+
+
 
           <div className="mt-6 border-t border-gray-150 pt-4 text-center text-xs text-gray-500 font-sans space-y-2">
             <p>

@@ -1,4 +1,4 @@
-// Woodland Acres Therapy Contact Page - Direct secure form submission
+// Woodland Acres Therapy Contact Page - Secure JSON file-based form submission (Bypasses SQLite locks)
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { portalApi } from "../portalServer";
@@ -164,7 +164,7 @@ function ContactPage() {
               <div className="text-center">
                 <button type="submit" disabled={loading}
                   className="rounded-xl bg-forest px-8 py-4 text-base font-semibold text-white shadow-md hover:bg-forest-dark transition-all transform hover:-translate-y-0.5 w-full sm:w-auto disabled:bg-forest/50 cursor-pointer">
-                  {loading ? "Submitting Security Request..." : "Send Message"}
+                  {loading ? "Submitting Secure Request..." : "Send Message"}
                 </button>
                 <p className="text-xs text-gray-500 mt-4">Your information is securely encrypted and HIPAA protected.</p>
               </div>

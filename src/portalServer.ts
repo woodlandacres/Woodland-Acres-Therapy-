@@ -298,31 +298,74 @@ export const portalApi = createServerFn({ method: "POST" })
         return { success: true };
       }
       case "submitContactForm": {
-        const { runDb } = await import("./portalServerOnly");
         const { name, email, phone, interest, insurance, message } = payload;
         if (!name || !email) {
           throw new Error("Name and email are required.");
         }
+        const { appendFile } = await import("fs/promises");
         const now = new Date().toISOString();
-        await runDb(
-          "INSERT INTO contact_submissions (name, email, phone, interest, insurance, message, status, created_at) VALUES (?, ?, ?, ?, ?, ?, 'pending', ?)",
-          [name.trim(), email.trim(), phone?.trim() || "", interest?.trim() || "", insurance?.trim() || "", message?.trim() || "", now]
+        const submission = {
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone?.trim() || "",
+          interest: interest?.trim() || "",
+          insurance: insurance?.trim() || "",
+          message: message?.trim() || "",
+          status: "pending",
+          timestamp: now
+        };
+        await appendFile(
+          "/home/team/shared/contact_submissions.json",
+          JSON.stringify(submission) + "\n",
+          "utf-8"
         );
-        console.log(`[Contact Submission] Received contact form from ${name} (${email}) at ${now}`);
-        return { success: true, message: "Your message has been received! Our therapist team will get in touch with you soon." };
+        console.log(`[Contact Submission] Received contact form from ${name} (${email}) and stored in JSON file at ${now}`);
+        return { success: true, message: "Your message has been received!" };
       }
       case "getPendingContactSubmissions": {
-        const { verifyToken, queryDb } = await import("./portalServerOnly");
+        const { verifyToken } = await import("./portalServerOnly");
         const user = verifyToken(payload.token);
         if (!user || user.role !== "therapist") throw new Error("Unauthorized");
-        return await queryDb("SELECT * FROM contact_submissions WHERE status = 'pending' ORDER BY created_at DESC");
+        
+        const { readFile } = await import("fs/promises");
+        try {
+          const content = await readFile("/home/team/shared/contact_submissions.json", "utf-8");
+          const lines = content.trim().split("\n").filter(Boolean);
+          const submissions = lines.map((line, index) => {
+            const data = JSON.parse(line);
+            return { id: index + 1, ...data };
+          });
+          return submissions.filter((s: any) => s.status !== "sent");
+        } catch (e) {
+          return [];
+        }
       }
       case "markContactSent": {
-        const { verifyToken, runDb } = await import("./portalServerOnly");
+        const { verifyToken } = await import("./portalServerOnly");
         const user = verifyToken(payload.token);
         if (!user || user.role !== "therapist") throw new Error("Unauthorized");
-        await runDb("UPDATE contact_submissions SET status = 'sent' WHERE id = ?", [payload.id]);
-        return { success: true };
+        
+        const { readFile, writeFile } = await import("fs/promises");
+        try {
+          const content = await readFile("/home/team/shared/contact_submissions.json", "utf-8");
+          const lines = content.trim().split("\n").filter(Boolean);
+          const submissions = lines.map((line, index) => {
+            const data = JSON.parse(line);
+            const virtualId = index + 1;
+            if (virtualId === payload.id) {
+              data.status = "sent";
+            }
+            return data;
+          });
+          await writeFile(
+            "/home/team/shared/contact_submissions.json",
+            submissions.map(s => JSON.stringify(s)).join("\n") + "\n",
+            "utf-8"
+          );
+          return { success: true };
+        } catch (e) {
+          throw new Error("Failed to update submission status");
+        }
       }
       default:
         throw new Error(`Unknown action: ${action}`);

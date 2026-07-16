@@ -1,7 +1,6 @@
 // Woodland Acres Therapy Contact Page - Secure JSON file-based form submission (Bypasses SQLite locks)
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { portalApi } from "../portalServer";
 
 export const Route = createFileRoute("/contact")({
   component: ContactPage,
@@ -25,21 +24,24 @@ function ContactPage() {
     setError("");
 
     try {
-      const res = await portalApi({
-        data: {
-          action: "submitContactForm",
-          payload: { name, email, phone, interest, insurance, message },
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
+        body: JSON.stringify({ name, email, phone, interest, insurance, message }),
       });
 
-      if (res && res.success) {
+      const data = await res.json();
+
+      if (res.ok && data.success) {
         setSuccess(true);
       } else {
-        setError("Unable to send message. Please try again or email directly.");
+        setError(data.error || "Unable to send message. Please try again or email directly.");
       }
     } catch (err: any) {
       console.error(err);
-      setError(err?.message || "Failed to connect to the secure portal. Please try direct email or try again later.");
+      setError("Failed to connect to the secure portal. Please try direct email or try again later.");
     } finally {
       setLoading(false);
     }

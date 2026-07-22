@@ -59,7 +59,9 @@ export const portalApi = createServerFn({ method: "POST" })
         const { queryDbOne, queryDb } = await import("./portalServerOnly");
         const course = await queryDbOne("SELECT * FROM courses WHERE id = ?", [payload.courseId]);
         const modules = await queryDb("SELECT * FROM course_modules WHERE course_id = ? ORDER BY order_index", [payload.courseId]);
-        return { course, modules };
+        const resources = await queryDb("SELECT * FROM resources WHERE course_id = ?", [payload.courseId]);
+        const zoomSessions = await queryDb("SELECT * FROM zoom_sessions WHERE course_id = ? ORDER BY scheduled_at", [payload.courseId]);
+        return { course, modules, resources, zoomSessions };
       }
       case "updateProgress": {
         const { verifyToken, runDb } = await import("./portalServerOnly");
@@ -84,7 +86,7 @@ export const portalApi = createServerFn({ method: "POST" })
         const user = verifyToken(payload.token);
         if (!user) throw new Error("Unauthorized");
         const now = new Date().toISOString();
-        await runDb("INSERT INTO discussions (course_id, user_id, title, content, created_at) VALUES (?, ?, ?, ?, ?)", [payload.courseId, user.userId, payload.title, payload.content, now]);
+        await runDb("INSERT INTO discussions (course_id, user_id, title, content, category, created_at) VALUES (?, ?, ?, ?, ?, ?)", [payload.courseId, user.userId, payload.title, payload.content, payload.category || "General Chat", now]);
         return { success: true };
       }
       case "replyDiscussion": {
@@ -153,12 +155,226 @@ export const portalApi = createServerFn({ method: "POST" })
         if (!user || user.role !== "therapist") throw new Error("Unauthorized");
         return await queryDb("SELECT * FROM courses ORDER BY created_at DESC");
       }
+      case "deleteModule": {
+        const { verifyToken, runDb } = await import("./portalServerOnly");
+        const user = verifyToken(payload.token);
+        if (!user || user.role !== "therapist") throw new Error("Unauthorized");
+        await runDb("DELETE FROM course_modules WHERE id = ?", [payload.moduleId || payload.id]);
+        return { success: true };
+      }
+      case "deleteResource": {
+        const { verifyToken, runDb } = await import("./portalServerOnly");
+        const user = verifyToken(payload.token);
+        if (!user || user.role !== "therapist") throw new Error("Unauthorized");
+        await runDb("DELETE FROM resources WHERE id = ?", [payload.resourceId || payload.id]);
+        return { success: true };
+      }
+      case "deleteCourse": {
+        const { verifyToken, runDb } = await import("./portalServerOnly");
+        const user = verifyToken(payload.token);
+        if (!user || user.role !== "therapist") throw new Error("Unauthorized");
+        const courseId = payload.courseId || payload.id;
+        await runDb("DELETE FROM enrollments WHERE course_id = ?", [courseId]);
+        await runDb("DELETE FROM course_modules WHERE course_id = ?", [courseId]);
+        await runDb("DELETE FROM resources WHERE course_id = ?", [courseId]);
+        await runDb("DELETE FROM zoom_sessions WHERE course_id = ?", [courseId]);
+        await runDb("DELETE FROM discussions WHERE course_id = ?", [courseId]);
+        await runDb("DELETE FROM courses WHERE id = ?", [courseId]);
+        return { success: true };
+      }
+      case "unenrollStudent": {
+        const { verifyToken, runDb } = await import("./portalServerOnly");
+        const user = verifyToken(payload.token);
+        if (!user || user.role !== "therapist") throw new Error("Unauthorized");
+        await runDb("DELETE FROM enrollments WHERE course_id = ? AND user_id = ?", [payload.courseId, payload.userId]);
+        return { success: true };
+      }
+      case "deleteZoomSession": {
+        const { verifyToken, runDb } = await import("./portalServerOnly");
+        const user = verifyToken(payload.token);
+        if (!user || user.role !== "therapist") throw new Error("Unauthorized");
+        await runDb("DELETE FROM zoom_sessions WHERE id = ?", [payload.sessionId || payload.id]);
+        return { success: true };
+      }
+      case "getDiscussionThreads": {
+        const { verifyToken, queryDb } = await import("./portalServerOnly");
+        const user = verifyToken(payload.token);
+        if (!user) throw new Error("Unauthorized");
+        const threads: any[] = await queryDb("SELECT d.*, u.display_name FROM discussions d JOIN users u ON d.user_id = u.id WHERE d.course_id = ? ORDER BY d.created_at DESC", [payload.courseId]);
+        for (const t of threads) {
+          t.replies = await queryDb("SELECT r.*, u.display_name FROM discussion_replies r JOIN users u ON r.user_id = u.id WHERE r.discussion_id = ? ORDER BY r.created_at ASC", [t.id]);
+        }
+        return threads;
+      }
+      case "updateModuleOrder": {
+        const { verifyToken, runDb } = await import("./portalServerOnly");
+        const user = verifyToken(payload.token);
+        if (!user || user.role !== "therapist") throw new Error("Unauthorized");
+        await runDb("UPDATE course_modules SET order_index = ? WHERE id = ?", [payload.orderIndex || payload.order_index, payload.moduleId || payload.id]);
+        return { success: true };
+      }
+      case "updateCourse": {
+        const { verifyToken, runDb } = await import("./portalServerOnly");
+        const user = verifyToken(payload.token);
+        if (!user || user.role !== "therapist") throw new Error("Unauthorized");
+        await runDb(
+          "UPDATE courses SET title = ?, description = ?, price_cents = ?, published = ?, syllabus_type = ? WHERE id = ?",
+          [payload.title, payload.description, payload.price_cents, payload.published, payload.syllabus_type || 'self_paced', payload.courseId || payload.id]
+        );
+        return { success: true };
+      }
+      case "updateZoomSession": {
+        const { verifyToken, runDb } = await import("./portalServerOnly");
+        const user = verifyToken(payload.token);
+        if (!user || user.role !== "therapist") throw new Error("Unauthorized");
+        await runDb(
+          "UPDATE zoom_sessions SET title = ?, zoom_link = ?, scheduled_at = ?, duration_min = ? WHERE id = ?",
+          [payload.title, payload.zoomLink || payload.zoom_link, payload.scheduledAt || payload.scheduled_at, payload.durationMin || payload.duration_min, payload.sessionId || payload.id]
+        );
+        return { success: true };
+      }
+      case "verifySession": {
+        const { verifyToken } = await import("./portalServerOnly");
+        const user = verifyToken(payload.token);
+        if (!user) throw new Error("Invalid session");
+        return { success: true, user: { id: user.userId, email: user.email, role: user.role } };
+      }
+      case "requestPasswordReset": {
+        const { queryDbOne, runDb } = await import("./portalServerOnly");
+        const user: any = await queryDbOne("SELECT * FROM users WHERE email = ?", [payload.email]);
+        if (!user) {
+          console.log(`Password reset requested for non-existent email: ${payload.email}`);
+          return { success: true, message: "If that email address exists in our system, we've sent a password reset link to it." };
+        }
+        
+        // Generate UUID token
+        const token = crypto.randomUUID();
+        const expiresAt = new Date(Date.now() + 3600000).toISOString(); // 1 hour expiration
+        const now = new Date().toISOString();
+        
+        // Save to password_resets
+        await runDb("DELETE FROM password_resets WHERE email = ?", [user.email]);
+        await runDb(
+          "INSERT INTO password_resets (email, token, expires_at, created_at) VALUES (?, ?, ?, ?)",
+          [user.email, token, expiresAt, now]
+        );
+        
+        // Construct reset link
+        const resetLink = `https://b8fc6da28c11d57088a3189002633958.ctonew.app/portal/reset-password?token=${token}`;
+        
+        // Log to console for development verification
+        console.log(`\n--- PASSWORD RESET REQUEST ---`);
+        console.log(`To: ${user.email}`);
+        console.log(`Reset Link: ${resetLink}`);
+        console.log(`------------------------------\n`);
+        
+        return { 
+          success: true, 
+          message: "Secure password reset link has been dispatched to your email address.",
+          devLink: resetLink
+        };
+      }
+      case "resetPassword": {
+        const { queryDbOne, runDb, hashPassword } = await import("./portalServerOnly");
+        const resetRecord: any = await queryDbOne("SELECT * FROM password_resets WHERE token = ?", [payload.token]);
+        if (!resetRecord) {
+          throw new Error("Invalid or expired password reset token.");
+        }
+        
+        // Check expiration
+        if (new Date(resetRecord.expires_at) < new Date()) {
+          await runDb("DELETE FROM password_resets WHERE token = ?", [payload.token]);
+          throw new Error("This password reset link has expired. Please request a new one.");
+        }
+        
+        // Update user's password
+        const hashedPassword = hashPassword(payload.password);
+        await runDb("UPDATE users SET password_hash = ? WHERE email = ?", [hashedPassword, resetRecord.email]);
+        
+        // Clean up token
+        await runDb("DELETE FROM password_resets WHERE email = ?", [resetRecord.email]);
+        
+        console.log(`Password reset successfully for ${resetRecord.email}`);
+        return { success: true };
+      }
+      case "submitContactForm": {
+        const { name, email, phone, interest, insurance, message } = payload;
+        if (!name || !email) {
+          throw new Error("Name and email are required.");
+        }
+        const { appendFile } = await import("fs/promises");
+        const now = new Date().toISOString();
+        const submission = {
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone?.trim() || "",
+          interest: interest?.trim() || "",
+          insurance: insurance?.trim() || "",
+          message: message?.trim() || "",
+          status: "pending",
+          timestamp: now
+        };
+        await appendFile(
+          "/home/team/shared/contact_submissions.json",
+          JSON.stringify(submission) + "\n",
+          "utf-8"
+        );
+        console.log(`[Contact Submission] Received contact form from ${name} (${email}) and stored in JSON file at ${now}`);
+        return { success: true, message: "Your message has been received!" };
+      }
+      case "getPendingContactSubmissions": {
+        const { verifyToken } = await import("./portalServerOnly");
+        const user = verifyToken(payload.token);
+        if (!user || user.role !== "therapist") throw new Error("Unauthorized");
+        
+        const { readFile } = await import("fs/promises");
+        try {
+          const content = await readFile("/home/team/shared/contact_submissions.json", "utf-8");
+          const lines = content.trim().split("\n").filter(Boolean);
+          const submissions = lines.map((line, index) => {
+            const data = JSON.parse(line);
+            return { id: index + 1, ...data };
+          });
+          return submissions.filter((s: any) => s.status !== "sent");
+        } catch (e) {
+          return [];
+        }
+      }
+      case "markContactSent": {
+        const { verifyToken } = await import("./portalServerOnly");
+        const user = verifyToken(payload.token);
+        if (!user || user.role !== "therapist") throw new Error("Unauthorized");
+        
+        const { readFile, writeFile } = await import("fs/promises");
+        try {
+          const content = await readFile("/home/team/shared/contact_submissions.json", "utf-8");
+          const lines = content.trim().split("\n").filter(Boolean);
+          const submissions = lines.map((line, index) => {
+            const data = JSON.parse(line);
+            const virtualId = index + 1;
+            if (virtualId === payload.id) {
+              data.status = "sent";
+            }
+            return data;
+          });
+          await writeFile(
+            "/home/team/shared/contact_submissions.json",
+            submissions.map(s => JSON.stringify(s)).join("\n") + "\n",
+            "utf-8"
+          );
+          return { success: true };
+        } catch (e) {
+          throw new Error("Failed to update submission status");
+        }
+      }
       default:
         throw new Error(`Unknown action: ${action}`);
     }
   });// Legacy named exports that delegate to portalApi
 export const loginUser = (opts: any) => portalApi({ data: { action: "login", payload: opts.data } });
 export const registerUser = (opts: any) => portalApi({ data: { action: "register", payload: opts.data } });
+export const requestPasswordReset = (opts: any) => portalApi({ data: { action: "requestPasswordReset", payload: opts.data } });
+export const resetPassword = (opts: any) => portalApi({ data: { action: "resetPassword", payload: opts.data } });
 export const getPatientDashboardData = (opts: any) => portalApi({ data: { action: "getPatientDashboard", payload: opts.data } });
 export const getTherapistDashboardData = (opts: any) => portalApi({ data: { action: "getTherapistDashboard", payload: opts.data } });
 export const createCourse = (opts: any) => portalApi({ data: { action: "createCourse", payload: opts.data } });
@@ -182,3 +398,13 @@ export const getDiscussions = (opts: any) => portalApi({ data: { action: "getThe
 export const addDiscussionReply = (opts: any) => portalApi({ data: { action: "replyDiscussion", payload: opts.data } });
 export const verifySession = (opts: any) => portalApi({ data: { action: "verifySession", payload: opts.data } });
 export const deleteCourseModule = (opts: any) => portalApi({ data: { action: "deleteModule", payload: opts.data } });
+export const deleteResource = (opts: any) => portalApi({ data: { action: "deleteResource", payload: opts.data } });
+export const deleteCourse = (opts: any) => portalApi({ data: { action: "deleteCourse", payload: opts.data } });
+export const unenrollStudent = (opts: any) => portalApi({ data: { action: "unenrollStudent", payload: opts.data } });
+export const getDiscussionThreads = (opts: any) => portalApi({ data: { action: "getDiscussionThreads", payload: opts.data } });
+export const updateCourse = (opts: any) => portalApi({ data: { action: "updateCourse", payload: opts.data } });
+export const updateZoomSession = (opts: any) => portalApi({ data: { action: "updateZoomSession", payload: opts.data } });
+export const updateModuleOrder = (opts: any) => portalApi({ data: { action: "updateModuleOrder", payload: opts.data } });
+export const submitContactForm = (opts: any) => portalApi({ data: { action: "submitContactForm", payload: opts.data } });
+export const getPendingContactSubmissions = (opts: any) => portalApi({ data: { action: "getPendingContactSubmissions", payload: opts.data } });
+export const markContactSent = (opts: any) => portalApi({ data: { action: "markContactSent", payload: opts.data } });

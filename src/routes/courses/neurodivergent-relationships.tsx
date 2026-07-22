@@ -172,7 +172,7 @@ function NeurodivergentRelationshipsCourseDetails() {
           <h2 className="text-3xl font-serif font-bold">Build a secure, neuro-affirming relationship.</h2>
           <p className="text-base text-[#F5F0E8]/90 max-w-xl mx-auto leading-relaxed font-sans">
             You don't have to navigate relationship friction using tools that don't fit your wiring. 
-            Book a free 15-minute consultation to explore our therapeutic course options.
+            Book a consultation to explore our therapeutic course options.
           </p>
           <div className="pt-2">
             <Link

@@ -27,11 +27,8 @@ function PortalLogin() {
     setError("");
 
     try {
-      const res = await loginUser({
-        data: {
-          email: email.trim(),
-          password: password,
-        },
+      const res = await portalApi({
+        data: { action: "login", payload: { email: email.trim(), password: password } },
       });
 
       if (res && res.success) {
@@ -113,6 +110,12 @@ function PortalLogin() {
                 <label htmlFor="password" className="block text-xs font-bold text-gray-700 uppercase">
                   Password
                 </label>
+                <Link
+                  to="/portal/forgot-password"
+                  className="text-xs font-bold text-forest hover:underline"
+                >
+                  Forgot Password?
+                </Link>
               </div>
               <input
                 id="password"

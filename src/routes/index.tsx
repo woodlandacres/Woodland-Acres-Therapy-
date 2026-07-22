@@ -30,7 +30,7 @@ function Home() {
                 to="/contact"
                 className="w-full sm:w-auto rounded-xl bg-forest px-6 py-4 text-base font-semibold text-white shadow-md hover:bg-forest-dark transition-all transform hover:-translate-y-0.5"
               >
-                Schedule Free Consultation
+                Schedule Consultation
               </Link>
               <Link
                 to="/courses"
@@ -355,7 +355,7 @@ function Home() {
         </div>
       </section>
 
-      {/* CTA Section (Free Consultation) */}
+      {/* CTA Section (Consultation) */}
       <section className="bg-forest py-20 text-[#F5F0E8] text-center relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute inset-0 bg-[radial-gradient(#5B8C5A_1px,transparent_1px)] [background-size:16px_16px] opacity-15" />
@@ -364,7 +364,7 @@ function Home() {
             Ready to Begin Your Woodland Journey?
           </h2>
           <p className="text-base sm:text-lg text-[#F5F0E8]/85 max-w-2xl mx-auto leading-relaxed font-sans">
-            It starts with a simple, complimentary 15-minute consultation. We'll discuss your clinical needs, 
+            It starts with a simple consultation. We'll discuss your clinical needs, 
             explain how our online courses and support groups integrate with individual therapy, and verify your 
             insurance details.
           </p>
@@ -373,7 +373,7 @@ function Home() {
               to="/contact"
               className="rounded-xl bg-[#F5F0E8] px-6 py-4 text-base font-semibold text-forest shadow-lg hover:bg-white transition-all transform hover:-translate-y-0.5"
             >
-              Book Free Consultation
+              Book Consultation
             </Link>
             <Link
               to="/portal"

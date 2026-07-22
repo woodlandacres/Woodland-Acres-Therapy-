@@ -21,13 +21,8 @@ function PortalRegister() {
     setError("");
 
     try {
-      const res = await registerUser({
-        data: {
-          email: email.trim(),
-          password,
-          displayName: displayName.trim(),
-          role,
-        },
+      const res = await portalApi({
+        data: { action: "register", payload: { email: email.trim(), password, display_name: displayName.trim(), role } },
       });
 
       if (res && res.success) {

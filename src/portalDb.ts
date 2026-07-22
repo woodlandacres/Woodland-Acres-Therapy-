@@ -1,3 +1,5 @@
+import bcryptjs from "bcryptjs";
+
 let dbInstance: any = null;
 
 export async function getDb() {
@@ -32,6 +34,7 @@ async function initDb(db: any) {
       description TEXT,
       price_cents INTEGER,
       published INTEGER DEFAULT 0,
+      syllabus_type TEXT DEFAULT 'self_paced',
       created_at TEXT
     );
 
@@ -85,6 +88,7 @@ async function initDb(db: any) {
       user_id INTEGER,
       title TEXT,
       content TEXT,
+      category TEXT DEFAULT NULL,
       created_at TEXT,
       FOREIGN KEY(course_id) REFERENCES courses(id) ON DELETE CASCADE,
       FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
@@ -111,7 +115,40 @@ async function initDb(db: any) {
       FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE SET NULL,
       FOREIGN KEY(course_id) REFERENCES courses(id) ON DELETE SET NULL
     );
+
+    CREATE TABLE IF NOT EXISTS password_resets (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      email TEXT NOT NULL,
+      token TEXT UNIQUE NOT NULL,
+      expires_at TEXT NOT NULL,
+      created_at TEXT NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS contact_submissions (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT,
+      email TEXT,
+      phone TEXT,
+      interest TEXT,
+      insurance TEXT,
+      message TEXT,
+      status TEXT CHECK(status IN ('pending','sent')) DEFAULT 'pending',
+      created_at TEXT
+    );
   `);
+
+  // Run schema migrations for existing databases
+  try {
+    db.exec("ALTER TABLE discussions ADD COLUMN category TEXT DEFAULT NULL;");
+  } catch (e) {
+    // Column already exists or table does not exist
+  }
+
+  try {
+    db.exec("ALTER TABLE courses ADD COLUMN syllabus_type TEXT DEFAULT 'self_paced';");
+  } catch (e) {
+    // Column already exists or table does not exist
+  }
 
   // Seed data
   const now = new Date().toISOString();
@@ -191,8 +228,8 @@ async function initDb(db: any) {
       { title: "Module 1: Mapping Obsessions and Compulsions", order: 1, type: "video", url: "https://www.w3schools.com/html/mov_bbb.mp4" },
       { title: "Module 2: Building Your Exposure Hierarchy", order: 2, type: "pdf", url: "/downloads/worksheets/erp_hierarchy_blank.pdf" },
       { title: "Module 3: The Golden Rule of Response Prevention", order: 3, type: "text", url: "" },
-      { title: "Module 4: Executing Real-Life In-Vivo Exposures", order: 4, type: "video", url: "https://www.w3schools.com/html/movie.mp4" },
-      { title: "Module 5: Dealing with Imaginal Exposure Scenarios", order: 5, type: "text", url: "" }
+      { title: "Module 4: Dealing with Imaginal Exposure Scenarios", order: 4, type: "text", url: "" },
+      { title: "Module 5: Executing Real-Life In-Vivo Exposures", order: 5, type: "video", url: "https://www.w3schools.com/html/movie.mp4" }
     ];
 
     for (const m of modulesC1) {

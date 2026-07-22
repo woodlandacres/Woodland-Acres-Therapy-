@@ -220,7 +220,7 @@ function OcdTherapy() {
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-6">
           <h2 className="text-3xl font-serif font-bold">Ready to break the OCD cycle?</h2>
           <p className="text-base text-[#F5F0E8]/90 max-w-xl mx-auto leading-relaxed">
-            Take the first step towards reclaiming your mental freedom. Book a free 15-minute consultation to discuss 
+            Take the first step towards reclaiming your mental freedom. Book a consultation to discuss 
             your specific obsessions and begin the ERP process.
           </p>
           <div className="pt-2">

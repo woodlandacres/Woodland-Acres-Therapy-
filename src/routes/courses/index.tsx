@@ -237,7 +237,7 @@ function CoursesIndex() {
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-6">
           <h2 className="text-3xl font-serif font-bold">Have questions about our online courses?</h2>
           <p className="text-base text-[#F5F0E8]/90 max-w-xl mx-auto leading-relaxed font-sans">
-            Whether you want to enroll as a self-paced learner, join a facilitated peer support group, or integrate these courses with individual therapy, let's schedule a free consult.
+            Whether you want to enroll as a self-paced learner, join a facilitated peer support group, or integrate these courses with individual therapy, let's schedule a consult.
           </p>
           <div className="pt-2">
             <Link

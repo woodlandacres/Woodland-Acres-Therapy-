@@ -20,7 +20,14 @@ export default defineConfig({
       projects: ["./tsconfig.json"],
     }),
     tanstackStart(),
-    nitro(),
+    nitro({
+      handlers: [
+        {
+          route: "/api/contact",
+          handler: "./server/api/contact.ts",
+        },
+      ],
+    }),
     viteReact(),
   ],
 });

@@ -29,6 +29,46 @@ function ResourcesIndex() {
       date: "June 12, 2026",
       readTime: "12 min read",
       snippet: "An honest, compassionate exploration of the hidden emotional and mental challenges of living with a chronic illness, chronic pain, or invisible disease, integrating the Fennell Four-Phase Model."
+    },
+    {
+      slug: "just-right-ocd-symmetry-erp",
+      title: "How to Use ERP for 'Just Right' OCD and Symmetry Compulsions",
+      category: "OCD & ERP Treatment",
+      date: "July 16, 2026",
+      readTime: "15 min read",
+      snippet: "Discover how to adapt Exposure and Response Prevention (ERP) for 'just right' OCD and symmetry compulsions. Learn the science of somatic tolerance training."
+    },
+    {
+      slug: "autistic-burnout-vs-depression",
+      title: "Autistic Burnout vs Depression: How to Tell the Difference",
+      category: "ADHD & Autism Support",
+      date: "July 10, 2026",
+      readTime: "14 min read",
+      snippet: "Is it clinical depression or autistic burnout? Discover the critical diagnostic differences, neurological markers, and how to safely heal."
+    },
+    {
+      slug: "bfrb-trichotillomania-dermatillomania-treatment",
+      title: "Body-Focused Repetitive Behaviors (BFRBs): When Hair Pulling and Skin Picking Take Over",
+      category: "Chronic Illness Support",
+      date: "July 5, 2026",
+      readTime: "15 min read",
+      snippet: "Struggling with compulsive hair pulling or skin picking? Explore evidence-based BFRB treatments, the SCAMP ComB model, and practical somatic coping strategies."
+    },
+    {
+      slug: "intrusive-thoughts-ocd-pure-o-erp",
+      title: "Intrusive Thoughts OCD: Why They Feel So Real and How ERP Helps",
+      category: "OCD & ERP Treatment",
+      date: "June 30, 2026",
+      readTime: "15 min read",
+      snippet: "Why do intrusive thoughts feel so terrifyingly real? Understand the science of 'Pure O', harm OCD, and how adapted ERP and I-CBT can help you recover."
+    },
+    {
+      slug: "personality-attachment-and-faith",
+      title: "Personality, Attachment, and Faith: How Who We Are Shapes Our Spiritual Commitment",
+      category: "Faith & Spirituality",
+      date: "July 16, 2026",
+      readTime: "12 min read",
+      snippet: "Research shows that personality traits and attachment styles significantly influence how individuals experience faith, religious commitment, and spiritual satisfaction."
     }
   ];
 
@@ -90,7 +130,7 @@ function ResourcesIndex() {
           <h2 className="text-3xl font-serif font-bold">Seeking personalized clinical support?</h2>
           <p className="text-base text-[#F5F0E8]/90 max-w-xl mx-auto leading-relaxed">
             Our articles provide helpful frameworks, but they are not a substitute for clinical care. 
-            Schedule a free 15-minute consultation to establish an integrated individual care structure.
+            Schedule a consultation to establish an integrated individual care structure.
           </p>
           <div className="pt-2">
             <Link

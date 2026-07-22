@@ -168,7 +168,7 @@ function NeurodivergentCare() {
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-6">
           <h2 className="text-3xl font-serif font-bold">Unmask and thrive with us.</h2>
           <p className="text-base text-[#F5F0E8]/90 max-w-xl mx-auto leading-relaxed">
-            Ready to explore your mind without judgment? Book a free 15-minute consultation to discuss neurodivergent-affirming 
+            Ready to explore your mind without judgment? Book a consultation to discuss neurodivergent-affirming 
             therapy and design an accommodation structure that fits you.
           </p>
           <div className="pt-2">

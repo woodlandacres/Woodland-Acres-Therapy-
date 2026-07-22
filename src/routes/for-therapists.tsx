@@ -54,7 +54,7 @@ function ForTherapists() {
               <h2 className="text-2xl font-serif font-bold text-gray-900 mb-4">Referral Coordination</h2>
               <p className="text-gray-600 leading-relaxed">
                 I am happy to coordinate care with referring providers. Please reach out via the contact form or
-                email me directly at <strong className="text-forest">eweaver@woodlandacrestherapy.org</strong>.
+                email me directly at <strong className="text-forest">weaveraemily@gmail.com</strong>.
               </p>
             </div>
             <div className="text-center pt-4">

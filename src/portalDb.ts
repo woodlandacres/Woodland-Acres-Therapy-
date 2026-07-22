@@ -1,3 +1,5 @@
+import bcryptjs from "bcryptjs";
+
 let dbInstance: any = null;
 
 export async function getDb() {

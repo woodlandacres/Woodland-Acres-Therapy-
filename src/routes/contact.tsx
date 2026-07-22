@@ -58,7 +58,7 @@ function ContactPage() {
           </h1>
           <p className="mt-4 text-base sm:text-xl text-gray-600 max-w-2xl mx-auto font-sans leading-relaxed">
             Ready to explore specialized individual therapy, therapeutic online courses, or facilitated support groups? 
-            Reach out today to schedule your complimentary consultation.
+            Reach out today to schedule your consultation.
           </p>
         </div>
       </section>

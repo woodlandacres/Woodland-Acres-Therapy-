@@ -155,8 +155,8 @@ function IndividualTherapy() {
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-6">
           <h2 className="text-3xl font-serif font-bold">Invest in your psychological well-being.</h2>
           <p className="text-base text-[#F5F0E8]/90 max-w-xl mx-auto leading-relaxed">
-            Ready to slow down, parse complex thoughts, and align your life with your values? Book a free 
-            15-minute consultation to begin individual therapy.
+            Ready to slow down, parse complex thoughts, and align your life with your values? Book a 
+            consultation to begin individual therapy.
           </p>
           <div className="pt-2">
             <Link

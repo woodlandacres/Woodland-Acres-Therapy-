@@ -147,7 +147,7 @@ function About() {
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-6">
           <h2 className="text-3xl font-serif font-bold">Want to see if we're a good fit?</h2>
           <p className="text-base text-[#F5F0E8]/90 max-w-xl mx-auto leading-relaxed">
-            Let's spend 15 minutes together over a free Zoom consultation to discuss your history, goals, 
+            Let's connect over a Zoom consultation to discuss your history, goals, 
             and outline a customized care plan.
           </p>
           <div className="pt-2">

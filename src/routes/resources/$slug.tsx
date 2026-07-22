@@ -859,7 +859,7 @@ function BlogPostView() {
             At Woodland Acres Therapy, we specialize in providing compassionate, evidence-based, neurodivergent-affirming care for autistic adults and ADHDers in Wisconsin and Michigan. We understand the profound difference between depression and autistic burnout, and we are committed to helping you find a pathway back to safety, unmasking, and authentic self-compassion.
           </p>
           <p className="mb-4 text-gray-750 leading-relaxed font-sans">
-            <strong>Ready to stop fighting your biology and start healing your nervous system?</strong> Visit our <Link to="/services/neurodivergent" className="text-forest font-semibold hover:underline">Neurodivergent Care Services Page</Link> or contact us today to schedule your free consultation.
+            <strong>Ready to stop fighting your biology and start healing your nervous system?</strong> Visit our <Link to="/services/neurodivergent" className="text-forest font-semibold hover:underline">Neurodivergent Care Services Page</Link> or contact us today to schedule a consultation.
           </p>
           <hr className="border-forest/10 my-8" />
           <h3 className="text-xl font-serif font-bold text-gray-900 pt-6 mb-3">References</h3>
@@ -1050,7 +1050,7 @@ function BlogPostView() {
             At Woodland Acres Therapy, we provide compassionate, evidence-based, whole-person care for individuals navigating Body-Focused Repetitive Behaviors. We understand the complex neurobiology of trichotillomania and dermatillomania, and we are committed to helping you dismantle the shame, regulate your nervous system, and reclaim your relationship with your body.
           </p>
           <p className="mb-4 text-gray-750 leading-relaxed font-sans">
-            <strong>Ready to step out of the shadow of shame and build a sustainable relationship with your body?</strong> Visit our <Link to="/services/chronic-illness" className="text-forest font-semibold hover:underline">Chronic Illness & Somatic Support Services Page</Link> or contact us today to schedule your free consultation.
+            <strong>Ready to step out of the shadow of shame and build a sustainable relationship with your body?</strong> Visit our <Link to="/services/chronic-illness" className="text-forest font-semibold hover:underline">Chronic Illness & Somatic Support Services Page</Link> or contact us today to schedule a consultation.
           </p>
           <hr className="border-forest/10 my-8" />
           <h3 className="text-xl font-serif font-bold text-gray-900 pt-6 mb-3">References</h3>
@@ -1229,7 +1229,7 @@ function BlogPostView() {
             At Woodland Acres Therapy, we provide compassionate, highly specialized, whole-person care for individuals navigating intrusive thoughts and "Pure O" OCD in Wisconsin and Michigan.
           </p>
           <p className="mb-4 text-gray-750 leading-relaxed font-sans">
-            <strong>Ready to find a path toward lasting cognitive freedom?</strong> Visit our <Link to="/services/ocd" className="text-forest font-semibold hover:underline">OCD Services Page</Link> or contact us today to schedule your free consultation.
+            <strong>Ready to find a path toward lasting cognitive freedom?</strong> Visit our <Link to="/services/ocd" className="text-forest font-semibold hover:underline">OCD Services Page</Link> or contact us today to schedule a consultation.
           </p>
           <hr className="border-forest/10 my-8" />
           <h3 className="text-xl font-serif font-bold text-gray-900 pt-6 mb-3">References</h3>
@@ -1427,7 +1427,7 @@ function BlogPostView() {
               to="/contact"
               className="rounded-xl bg-forest px-5 py-3 text-xs font-semibold text-white hover:bg-forest-dark transition-colors"
             >
-              Book Free Consultation
+              Book Consultation
             </Link>
             <Link
               to="/courses"

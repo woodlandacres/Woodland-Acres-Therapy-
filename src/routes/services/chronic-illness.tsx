@@ -177,7 +177,7 @@ function ChronicIllnessSupport() {
           <h2 className="text-3xl font-serif font-bold">You don't have to carry this grief alone.</h2>
           <p className="text-base text-[#F5F0E8]/90 max-w-xl mx-auto leading-relaxed">
             Let's establish a supportive, validating therapeutic space to honor your body's journey. 
-            Book a free 15-minute consultation to discuss mind-body support.
+            Book a consultation to discuss mind-body support.
           </p>
           <div className="pt-2">
             <Link

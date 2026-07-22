@@ -186,7 +186,7 @@ function ServicesIndex() {
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-6">
           <h2 className="text-3xl font-serif font-bold">Have questions about our clinical specialties?</h2>
           <p className="text-base text-[#F5F0E8]/90 max-w-xl mx-auto leading-relaxed">
-            We are here to help you navigate which services fit your life best. Let's talk over a free consultation.
+            We are here to help you navigate which services fit your life best. Let's talk over a consultation.
           </p>
           <div className="pt-2">
             <Link

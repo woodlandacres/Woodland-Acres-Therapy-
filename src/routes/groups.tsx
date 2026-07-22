@@ -164,7 +164,7 @@ function SupportGroups() {
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-6">
           <h2 className="text-3xl font-serif font-bold">Unsure which group fits your goals?</h2>
           <p className="text-base text-[#F5F0E8]/90 max-w-xl mx-auto leading-relaxed">
-            Let's chat over a complimentary 15-minute consultation. We'll explore your background and help you 
+            Let's chat over a consultation. We'll explore your background and help you 
             join a secure, validating peer container.
           </p>
           <div className="pt-2">

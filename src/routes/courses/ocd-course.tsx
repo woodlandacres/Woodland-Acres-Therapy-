@@ -150,12 +150,14 @@ function OcdCourseDetails() {
                     Access to all 18 video lectures, worksheets, and custom hierarchies in the portal.
                   </p>
                   <div className="pt-2">
-                    <Link
-                      to="/portal"
+                    <a
+                      href="https://buy.stripe.com/cNi14n1ef9pVb0s76f5kk00"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="block text-center w-full rounded-xl bg-forest py-2.5 text-xs font-semibold text-white hover:bg-forest-dark transition-colors shadow-sm"
                     >
-                      Enroll in Self-Paced Course
-                    </Link>
+                      Buy Now — $299
+                    </a>
                   </div>
                 </div>
 
@@ -166,7 +168,7 @@ function OcdCourseDetails() {
                   <span className="text-[10px] font-bold text-forest uppercase tracking-wider block">Path B: Premium 10-Week Recovery</span>
                   <p className="text-sm font-semibold text-gray-500">Includes this course + individual therapy + group</p>
                   <p className="text-xs text-gray-600 leading-relaxed">
-                    A comprehensive, therapist-guided recovery program. Tuition is <strong>$3,500</strong> with payment plans available.
+                    A comprehensive, therapist-guided recovery program. <strong>Contact for pricing & enrollment</strong> — payment plans available.
                   </p>
                   <div className="pt-2">
                     <Link

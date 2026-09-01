@@ -109,8 +109,8 @@ function CoursesIndex() {
               {/* Enrollment Widget */}
               <div className="md:w-64 flex flex-col justify-between border-t md:border-t-0 md:border-l border-gray-100 pt-6 md:pt-0 md:pl-8">
                 <div className="space-y-2">
-                  <span className="text-xs font-bold text-gray-400 uppercase tracking-wide">Total Program Tuition</span>
-                  <p className="text-xl sm:text-2xl font-bold text-gray-950 font-serif">$3,500</p>
+                  <span className="text-xs font-bold text-gray-400 uppercase tracking-wide">Program Tuition</span>
+                  <p className="text-md sm:text-base font-bold text-gray-950 font-sans">Contact for pricing & enrollment</p>
                   <p className="text-xs text-gray-500 leading-relaxed font-sans">
                     Structured payment plan options are available. Inquire to join the upcoming cohort.
                   </p>
@@ -172,10 +172,18 @@ function CoursesIndex() {
                     Complete self-paced access. No therapeutic relationship included.
                   </p>
                 </div>
-                <div className="pt-6">
+                <div className="space-y-2 pt-6">
+                  <a
+                    href="https://buy.stripe.com/cNi14n1ef9pVb0s76f5kk00"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-center w-full rounded-xl bg-forest px-4 py-3 text-sm font-semibold text-white hover:bg-forest-dark transition-colors shadow-sm"
+                  >
+                    Buy Now — $299
+                  </a>
                   <Link
                     to="/courses/ocd-course"
-                    className="block text-center w-full rounded-xl bg-forest px-4 py-3 text-sm font-semibold text-white hover:bg-forest-dark transition-colors shadow-sm"
+                    className="block text-center w-full rounded-xl border border-forest/20 bg-white px-4 py-2 text-xs font-semibold text-forest hover:bg-forest/5 hover:border-forest/40 transition-colors shadow-sm"
                   >
                     View Syllabus Details
                   </Link>
@@ -217,10 +225,18 @@ function CoursesIndex() {
                     Complete self-paced access to all 4 modules and relationship guides.
                   </p>
                 </div>
-                <div className="pt-6">
+                <div className="space-y-2 pt-6">
+                  <a
+                    href="https://buy.stripe.com/4gMcN51ef1Xtd8AeyH5kk00"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-center w-full rounded-xl bg-forest px-4 py-3 text-sm font-semibold text-white hover:bg-forest-dark transition-colors shadow-sm"
+                  >
+                    Buy Now — $199
+                  </a>
                   <Link
                     to="/courses/neurodivergent-relationships"
-                    className="block text-center w-full rounded-xl bg-forest px-4 py-3 text-sm font-semibold text-white hover:bg-forest-dark transition-colors shadow-sm"
+                    className="block text-center w-full rounded-xl border border-forest/20 bg-white px-4 py-2 text-xs font-semibold text-forest hover:bg-forest/5 hover:border-forest/40 transition-colors shadow-sm"
                   >
                     View Syllabus Details
                   </Link>

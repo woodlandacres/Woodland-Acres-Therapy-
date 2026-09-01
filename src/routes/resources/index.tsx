@@ -7,6 +7,46 @@ export const Route = createFileRoute("/resources/")({
 function ResourcesIndex() {
   const blogPosts = [
     {
+      slug: "ptsd-recovery-workbook",
+      title: "The Woodland Path: A Multi-Modal Trauma Recovery & PTSD Workbook",
+      category: "Free Digital Workbook",
+      date: "August 28, 2026",
+      readTime: "60-Page Manual",
+      snippet: "A comprehensive, self-guided clinical companion for trauma recovery and post-traumatic growth. Integrates evidence-based worksheets from CBT, DBT, CPT, Prolonged Exposure, and Expressive Arts."
+    },
+    {
+      slug: "finding-ocd-therapist-wisconsin",
+      title: "Finding an OCD Therapist in Wisconsin: What to Look for in ERP Treatment",
+      category: "OCD & ERP Treatment",
+      date: "July 29, 2026",
+      readTime: "8 min read",
+      snippet: "Struggling to find the right OCD therapist in Wisconsin? Learn how Exposure and Response Prevention (ERP) works, and what to look for in specialized treatment."
+    },
+    {
+      slug: "adhd-therapy-for-adults-wisconsin-michigan",
+      title: "ADHD Therapy for Adults in Wisconsin & Michigan: Beyond Medication",
+      category: "ADHD & Autism Support",
+      date: "July 29, 2026",
+      readTime: "7 min read",
+      snippet: "Seeking effective ADHD therapy for adults in Wisconsin or Michigan? Explore how a neurodivergent-affirming approach helps with executive functioning and sensory strategies."
+    },
+    {
+      slug: "psychosocial-toll-chronic-illness-wisconsin-michigan",
+      title: "The Psychosocial Toll of Chronic Illness: When Your Body Needs More Than Medicine",
+      category: "Chronic Illness Support",
+      date: "July 29, 2026",
+      readTime: "8 min read",
+      snippet: "The intersection of chronic illness and mental health goes beyond physical symptoms. Explore the deep psychosocial toll of medical grief, and how therapy can help."
+    },
+    {
+      slug: "can-you-learn-erp-through-online-course",
+      title: "Can You Learn ERP Through an Online Course? A Guide to Structured OCD Recovery",
+      category: "OCD & ERP Treatment",
+      date: "July 29, 2026",
+      readTime: "7 min read",
+      snippet: "Is an ERP therapy online course effective for OCD recovery? Read our guide on how structured courses, online modules, and group integration can support healing."
+    },
+    {
       slug: "demystifying-ocd-talk-therapy-risks",
       title: "What is ERP Therapy? A Complete Guide to Exposure and Response Prevention for OCD",
       category: "OCD & ERP Treatment",

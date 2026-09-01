@@ -23,3 +23,9 @@ src/routeTree.gen.ts
 *.db-wal
 contact_submissions.json
 *.bak
+.vercel
+.vercel/
+.vercel-build
+build-vercel.sh
+go-live.sh
+vercel-entry.ts

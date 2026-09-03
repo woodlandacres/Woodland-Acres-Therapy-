@@ -7,14 +7,6 @@ export const Route = createFileRoute("/resources/")({
 function ResourcesIndex() {
   const blogPosts = [
     {
-      slug: "ptsd-recovery-workbook",
-      title: "The Woodland Path: A Multi-Modal Trauma Recovery & PTSD Workbook",
-      category: "Free Digital Workbook",
-      date: "August 28, 2026",
-      readTime: "60-Page Manual",
-      snippet: "A comprehensive, self-guided clinical companion for trauma recovery and post-traumatic growth. Integrates evidence-based worksheets from CBT, DBT, CPT, Prolonged Exposure, and Expressive Arts."
-    },
-    {
       slug: "finding-ocd-therapist-wisconsin",
       title: "Finding an OCD Therapist in Wisconsin: What to Look for in ERP Treatment",
       category: "OCD & ERP Treatment",

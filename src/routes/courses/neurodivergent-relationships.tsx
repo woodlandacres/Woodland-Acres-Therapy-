@@ -113,7 +113,7 @@ function NeurodivergentRelationshipsCourseDetails() {
               <div className="rounded-3xl border border-forest/15 p-6 bg-cream shadow-xl space-y-6">
                 <div className="space-y-1.5 text-center border-b border-forest/10 pb-4">
                   <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Tuition Enrollment</span>
-                  <p className="text-3xl font-bold text-gray-950 font-serif">$199.00 USD</p>
+                  <p className="text-3xl font-bold text-gray-950 font-serif">$49.00 USD</p>
                   <p className="text-xs text-forest font-semibold mt-1 font-sans">Included FREE for all practice therapy clients</p>
                 </div>
 
@@ -141,12 +141,12 @@ function NeurodivergentRelationshipsCourseDetails() {
 
                 <div className="pt-2">
                   <a
-                    href="https://buy.stripe.com/4gMcN51ef1Xtd8AeyH5kk00"
+                    href="https://buy.stripe.com/6oU28r7CD1Xt1pScqz5kk03"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block text-center w-full rounded-xl bg-forest py-3.5 text-sm font-semibold text-white hover:bg-forest-dark transition-colors shadow-sm"
                   >
-                    Buy Now — $199
+                    Buy Now — $49
                   </a>
                 </div>
               </div>

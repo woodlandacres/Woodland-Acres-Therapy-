@@ -145,18 +145,18 @@ function OcdCourseDetails() {
                 {/* Option 1: Self-Paced Course */}
                 <div className="space-y-2">
                   <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider block">Path A: Self-Paced Course</span>
-                  <p className="text-2xl font-bold text-gray-950 font-serif">$299</p>
+                  <p className="text-2xl font-bold text-gray-950 font-serif">$79</p>
                   <p className="text-xs text-gray-600 leading-relaxed">
                     Access to all 18 video lectures, worksheets, and custom hierarchies in the portal.
                   </p>
                   <div className="pt-2">
                     <a
-                      href="https://buy.stripe.com/cNi14n1ef9pVb0s76f5kk00"
+                      href="https://buy.stripe.com/3cIdR9bST7hN9Wo0HR5kk04"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="block text-center w-full rounded-xl bg-forest py-2.5 text-xs font-semibold text-white hover:bg-forest-dark transition-colors shadow-sm"
                     >
-                      Buy Now — $299
+                      Buy Now — $79
                     </a>
                   </div>
                 </div>

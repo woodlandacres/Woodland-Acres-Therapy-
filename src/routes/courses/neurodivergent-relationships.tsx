@@ -140,12 +140,14 @@ function NeurodivergentRelationshipsCourseDetails() {
                 </div>
 
                 <div className="pt-2">
-                  <Link
-                    to="/portal"
+                  <a
+                    href="https://buy.stripe.com/4gMcN51ef1Xtd8AeyH5kk00"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="block text-center w-full rounded-xl bg-forest py-3.5 text-sm font-semibold text-white hover:bg-forest-dark transition-colors shadow-sm"
                   >
-                    Enroll via Client Portal
-                  </Link>
+                    Buy Now — $199
+                  </a>
                 </div>
               </div>
 

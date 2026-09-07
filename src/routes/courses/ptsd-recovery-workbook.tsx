@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/resources/ptsd-recovery-workbook")({
+export const Route = createFileRoute("/courses/ptsd-recovery-workbook")({
   component: PTSDWorkbookView,
 });
 
@@ -106,7 +106,7 @@ function PTSDWorkbookView() {
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#2D5A3D_1px,transparent_1px)] [background-size:16px_16px]"></div>
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 relative z-10 space-y-6">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-forest/10 text-forest uppercase tracking-wider">
-            ★ Free Downloadable Resource
+            ★ Self-Paced Educational Course
           </span>
           <h1 className="text-4xl sm:text-6xl font-serif font-bold text-gray-900 leading-tight tracking-tight max-w-4xl mx-auto">
             The Woodland Path
@@ -121,14 +121,12 @@ function PTSDWorkbookView() {
           {/* Quick Actions */}
           <div className="pt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a
-              href="/downloads/ptsd-recovery-workbook.md"
-              download="Woodland-Path-Trauma-Recovery-Workbook.md"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-forest px-8 py-4 text-base font-semibold text-[#F5F0E8] shadow-md hover:bg-forest-dark transition-all transform hover:-translate-y-0.5"
+              href="https://buy.stripe.com/4gMeVd2ijdGbc4w0HR5kk02"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-forest px-8 py-4 text-base font-bold text-[#F5F0E8] shadow-md hover:bg-forest-dark transition-all transform hover:-translate-y-0.5"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-              </svg>
-              Download Free Workbook (.MD)
+              Buy Now — $79
             </a>
             <Link
               to="/contact"
@@ -138,7 +136,7 @@ function PTSDWorkbookView() {
             </Link>
           </div>
           <p className="text-xs text-gray-500 font-sans">
-            Format: Markdown (.MD) — Compatible with Obsidian, Notion, or any text editor. Clean, portable, and offline-ready.
+            Full course companion with lifetime self-paced access. Safe and secure checkout via Stripe.
           </p>
         </div>
       </section>
@@ -187,7 +185,7 @@ function PTSDWorkbookView() {
                 Trauma is not a thinking problem; it is a <strong>biological survival response</strong> that reshapes the nervous system, brain structures (the amygdala and hippocampus), and how we relate to the world. Healing from trauma requires a multi-modal approach—calming our biological smoke alarms (grounding and distress tolerance), cognitive reappraisal (addressing stuck points), and narrative externalization (reclaiming our stories).
               </p>
               <p>
-                We compiled this 60-page recovery guide to serve as a <strong>completely free, high-utility lead magnet</strong> and reference manual. Whether you use it on your own as a self-paced journal, run through it alongside your therapist, or use it to explore your window of tolerance before embarking on structured trauma therapy, we hope it offers you a safe, grounded path forward.
+                We compiled this comprehensive 60-page recovery guide and self-paced course to serve as a dense, high-utility reference manual. Whether you use it on your own as a self-paced journal, run through it alongside your therapist, or use it to explore your window of tolerance before embarking on structured trauma therapy, we hope it offers you a safe, grounded path forward.
               </p>
             </div>
           </div>
@@ -241,26 +239,24 @@ function PTSDWorkbookView() {
             </p>
           </div>
 
-          {/* Download CTA Card */}
+          {/* Purchase CTA Card */}
           <div className="bg-forest rounded-2xl p-8 sm:p-12 text-[#F5F0E8] text-center space-y-6 shadow-md relative overflow-hidden">
             <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[radial-gradient(#F5F0E8_1px,transparent_1px)] [background-size:12px_12px]"></div>
             <div className="relative z-10 max-w-2xl mx-auto space-y-4">
               <h3 className="text-2xl sm:text-3xl font-serif font-bold">
-                Download Your Free Copy Today
+                Begin Your Trauma Recovery Journey
               </h3>
               <p className="text-sm sm:text-base text-[#F5F0E8]/90 leading-relaxed font-sans">
-                Take the woodland path to healing. The workbook is completely free of charge, with no email subscription walls or payment hurdles required. We encourage you to import it into your personal journal or print out the physical worksheets to complete with pen and ink.
+                Take the woodland path to healing with lifetime, self-paced access to this 60-page multi-modal curriculum, interactive worksheets, and therapeutic resources for $79.
               </p>
               <div className="pt-4 flex flex-col sm:flex-row justify-center items-center gap-4">
                 <a
-                  href="/downloads/ptsd-recovery-workbook.md"
-                  download="Woodland-Path-Trauma-Recovery-Workbook.md"
+                  href="https://buy.stripe.com/4gMeVd2ijdGbc4w0HR5kk02"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[#F5F0E8] px-8 py-4 text-base font-bold text-forest shadow-md hover:bg-white transition-colors"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                  </svg>
-                  Get the Workbook (.MD)
+                  Buy Now — $79
                 </a>
                 <Link
                   to="/contact"

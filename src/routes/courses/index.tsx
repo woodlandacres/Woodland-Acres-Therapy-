@@ -167,19 +167,19 @@ function CoursesIndex() {
               <div className="md:w-64 flex flex-col justify-between border-t md:border-t-0 md:border-l border-gray-100 pt-6 md:pt-0 md:pl-8">
                 <div className="space-y-2">
                   <span className="text-xs font-bold text-gray-400 uppercase tracking-wide">Course Tuition</span>
-                  <p className="text-xl font-bold text-gray-950 font-serif">$299</p>
+                  <p className="text-xl font-bold text-gray-950 font-serif">$79</p>
                   <p className="text-xs text-gray-500 leading-relaxed font-sans">
                     Complete self-paced access. No therapeutic relationship included.
                   </p>
                 </div>
                 <div className="space-y-2 pt-6">
                   <a
-                    href="https://buy.stripe.com/cNi14n1ef9pVb0s76f5kk00"
+                    href="https://buy.stripe.com/3cIdR9bST7hN9Wo0HR5kk04"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block text-center w-full rounded-xl bg-forest px-4 py-3 text-sm font-semibold text-white hover:bg-forest-dark transition-colors shadow-sm"
                   >
-                    Buy Now — $299
+                    Buy Now — $79
                   </a>
                   <Link
                     to="/courses/ocd-course"
@@ -191,7 +191,72 @@ function CoursesIndex() {
               </div>
             </div>
 
-            {/* 3. Neurodivergent Relationship Dynamics */}
+            {/* 3. The Woodland Path: Trauma Recovery & PTSD Workbook */}
+            <div className="bg-white rounded-3xl p-8 border border-forest/10 shadow-xl flex flex-col md:flex-row justify-between gap-8 hover:border-forest transition-all">
+              {/* Course Info */}
+              <div className="space-y-4 flex-grow md:max-w-2xl">
+                <div className="flex flex-wrap gap-2">
+                  <span className="text-[10px] font-semibold bg-forest/5 text-forest border border-forest/10 px-2.5 py-1 rounded-md">
+                    Educational Resource
+                  </span>
+                  <span className="text-[10px] font-semibold bg-forest/5 text-forest border border-forest/10 px-2.5 py-1 rounded-md">
+                    Self-Paced
+                  </span>
+                  <span className="text-[10px] font-semibold bg-forest/5 text-forest border border-forest/10 px-2.5 py-1 rounded-md">
+                    Trauma & PTSD Recovery
+                  </span>
+                </div>
+                <div>
+                  <h3 className="text-2xl font-serif font-bold text-gray-900">The Woodland Path: Trauma Recovery & PTSD Workbook</h3>
+                  <p className="text-sm font-semibold text-forest mt-1">Multi-Modal Self-Guided Trauma Recovery Curriculum</p>
+                </div>
+                <p className="text-xs text-brown-warm font-semibold tracking-wider uppercase">9 Sections • Comprehensive Exercises • Somatic & Creative Prompts</p>
+                <p className="text-sm text-gray-600 leading-relaxed font-sans">
+                  A comprehensive, interactive companion integrating evidence-based tools from CBT, DBT, CPT, Prolonged Exposure (PE), Narrative, and Expressive Arts therapies. Safely guides you through trauma understanding, autonomic regulation, safety planning, cognitive stuck points, and post-traumatic growth.
+                </p>
+                
+                <div className="bg-cream/30 border border-forest/5 rounded-2xl p-4 space-y-2">
+                  <p className="text-xs text-gray-600 font-sans leading-relaxed">
+                    <strong>Includes:</strong> All 9 recovery modules, autonomic state maps, grounding techniques, narrative frameworks, exposure hierarchies, and creative expressive art prompts.
+                  </p>
+                  <p className="text-xs text-brown-warm font-sans leading-relaxed">
+                    <strong>Does NOT include:</strong> Individual therapy, clinical oversight, emergency crisis response, or an active therapeutic relationship.
+                  </p>
+                  <p className="text-xs font-semibold text-brown-warm leading-relaxed border-t border-forest/5 pt-2">
+                    ⚠ Disclaimer: This is an educational resource only and not a substitute for mental health treatment.
+                  </p>
+                </div>
+              </div>
+
+              {/* Enrollment Widget */}
+              <div className="md:w-64 flex flex-col justify-between border-t md:border-t-0 md:border-l border-gray-100 pt-6 md:pt-0 md:pl-8">
+                <div className="space-y-2">
+                  <span className="text-xs font-bold text-gray-400 uppercase tracking-wide">Course Tuition</span>
+                  <p className="text-xl font-bold text-gray-950 font-serif">$79</p>
+                  <p className="text-xs text-gray-500 leading-relaxed font-sans">
+                    Complete self-paced access. Safe and secure checkout via Stripe.
+                  </p>
+                </div>
+                <div className="space-y-2 pt-6">
+                  <a
+                    href="https://buy.stripe.com/4gMeVd2ijdGbc4w0HR5kk02"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-center w-full rounded-xl bg-forest px-4 py-3 text-sm font-semibold text-white hover:bg-forest-dark transition-colors shadow-sm"
+                  >
+                    Buy Now — $79
+                  </a>
+                  <Link
+                    to="/courses/ptsd-recovery-workbook"
+                    className="block text-center w-full rounded-xl border border-forest/20 bg-white px-4 py-2 text-xs font-semibold text-forest hover:bg-forest/5 hover:border-forest/40 transition-colors shadow-sm"
+                  >
+                    View Syllabus Details
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* 4. Neurodivergent Relationship Dynamics */}
             <div className="bg-white rounded-3xl p-8 border border-forest/10 shadow-xl flex flex-col md:flex-row justify-between gap-8 hover:border-forest transition-all">
               {/* Course Info */}
               <div className="space-y-4 flex-grow md:max-w-2xl">
@@ -220,19 +285,19 @@ function CoursesIndex() {
               <div className="md:w-64 flex flex-col justify-between border-t md:border-t-0 md:border-l border-gray-100 pt-6 md:pt-0 md:pl-8">
                 <div className="space-y-2">
                   <span className="text-xs font-bold text-gray-400 uppercase tracking-wide">Course Tuition</span>
-                  <p className="text-xl font-bold text-gray-950 font-serif">$199</p>
+                  <p className="text-xl font-bold text-gray-950 font-serif">$49</p>
                   <p className="text-xs text-gray-500 leading-relaxed font-sans">
                     Complete self-paced access to all 4 modules and relationship guides.
                   </p>
                 </div>
                 <div className="space-y-2 pt-6">
                   <a
-                    href="https://buy.stripe.com/4gMcN51ef1Xtd8AeyH5kk00"
+                    href="https://buy.stripe.com/6oU28r7CD1Xt1pScqz5kk03"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block text-center w-full rounded-xl bg-forest px-4 py-3 text-sm font-semibold text-white hover:bg-forest-dark transition-colors shadow-sm"
                   >
-                    Buy Now — $199
+                    Buy Now — $49
                   </a>
                   <Link
                     to="/courses/neurodivergent-relationships"

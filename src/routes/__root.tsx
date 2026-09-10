@@ -236,6 +236,13 @@ function Layout({ children }: { children: ReactNode }) {
                 Courses
               </Link>
               <Link
+                to="/store"
+                activeProps={{ className: "bg-forest/10 text-forest" }}
+                className="px-3.5 py-2 rounded-lg text-[14px] font-medium text-gray-700 hover:bg-forest/5 hover:text-forest transition-all"
+              >
+                Store
+              </Link>
+              <Link
                 to="/groups"
                 activeProps={{ className: "bg-forest/10 text-forest" }}
                 className="px-3.5 py-2 rounded-lg text-[14px] font-medium text-gray-700 hover:bg-forest/5 hover:text-forest transition-all"
@@ -370,6 +377,13 @@ function Layout({ children }: { children: ReactNode }) {
               Courses
             </Link>
             <Link
+              to="/store"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:bg-forest/5 hover:text-forest"
+            >
+              Store
+            </Link>
+            <Link
               to="/groups"
               onClick={() => setMobileMenuOpen(false)}
               className="block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:bg-forest/5 hover:text-forest"
@@ -493,6 +507,11 @@ function Layout({ children }: { children: ReactNode }) {
                 <li>
                   <Link to="/groups" className="text-[#F5F0E8]/85 hover:text-white hover:underline">
                     Support Groups
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/store" className="text-[#F5F0E8]/85 hover:text-white hover:underline">
+                    Store
                   </Link>
                 </li>
               </ul>
